@@ -171,6 +171,7 @@ header h1 {
     object-fit: contain; /* Garante que a imagem não seja distorcida */
 }
 
+/* Container de combate - Flanquear */
 .Flank {
     border: 2px solid #000; /* Borda preta */
     padding: 15px; /* Espaçamento interno */
@@ -185,12 +186,12 @@ header h1 {
 .Flank-header {
     display: flex; /* Flexbox para organizar imagem e título */
     align-items: center; /* Alinha verticalmente ao centro */
-    gap: 20%; /* Espaçamento entre imagem e título */
+    gap: 5%; /* Espaçamento entre imagem e título */
     margin-bottom: 10px; /* Espaçamento abaixo da linha */
 }
 
 .iconTextFlank {
-    width: 25%; /* Tamanho fixo da imagem */
+    width: 15%; /* Tamanho fixo da imagem */
     height: auto; /* Mantém a proporção */
     object-fit: contain; /* Garante que a imagem não seja distorcida */
 }
@@ -201,6 +202,166 @@ header h1 {
     font-weight: bold; /* Define o texto como negrito */
     text-align: left; /* Alinha o texto à esquerda */
     line-height: 1; /* Espaçamento entre linhas */
+}
+
+/* Container de combate - Ataque Surpresa */
+.SurpriseAttack {
+    border: 2px solid #000; /* Borda preta */
+    padding: 15px; /* Espaçamento interno */
+    margin: 20px 0; /* Espaçamento externo */
+    border-radius: 10px; /* Bordas arredondadas */
+    background-color: #f9f9f9; /* Cor de fundo */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    display: flex; /* Flexbox para alinhar os elementos */
+    flex-direction: column; /* Elementos empilhados verticalmente */
+}
+
+.SurpriseAttack-header {
+    display: flex; /* Flexbox para organizar imagem e título */
+    align-items: center; /* Alinha verticalmente ao centro */
+    gap: 5%; /* Espaçamento entre imagem e título */
+    margin-bottom: 10px; /* Espaçamento abaixo da linha */
+}
+
+.iconTextSurpriseAttack {
+    width: 15%; /* Tamanho fixo da imagem */
+    height: auto; /* Mantém a proporção */
+    object-fit: contain; /* Garante que a imagem não seja distorcida */
+}
+
+.SurpriseAttack-header h1 {
+    margin: 0; /* Remove margens padrão */
+    font-size: 3rem; /* Define o tamanho do texto */
+    font-weight: bold; /* Define o texto como negrito */
+    text-align: left; /* Alinha o texto à esquerda */
+    line-height: 1; /* Espaçamento entre linhas */
+}
+
+
+/* Container de combate - Postura de Batalha: Defesa Completa */
+.CompleteDefense {
+    border: 2px solid #000; /* Borda preta */
+    padding: 15px; /* Espaçamento interno */
+    margin: 20px 0; /* Espaçamento externo */
+    border-radius: 10px; /* Bordas arredondadas */
+    background-color: #f9f9f9; /* Cor de fundo */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    display: flex; /* Flexbox para alinhar os elementos */
+    flex-direction: column; /* Elementos empilhados verticalmente */
+}
+
+.CompleteDefense-header {
+    display: flex; /* Flexbox para organizar imagem e título */
+    align-items: center; /* Alinha verticalmente ao centro */
+    gap: 5%; /* Espaçamento entre imagem e título */
+    margin-bottom: 10px; /* Espaçamento abaixo da linha */
+}
+
+.iconTextCompleteDefense {
+    width: 15%; /* Tamanho fixo da imagem */
+    height: auto; /* Mantém a proporção */
+    object-fit: contain; /* Garante que a imagem não seja distorcida */
+}
+
+.CompleteDefense-header h1 {
+    margin: 0; /* Remove margens padrão */
+    font-size: 3rem; /* Define o tamanho do texto */
+    font-weight: bold; /* Define o texto como negrito */
+    text-align: left; /* Alinha o texto à esquerda */
+    line-height: 1; /* Espaçamento entre linhas */
+}
+
+
+/* Container de combate - Postura de Batalha: Corrida */
+.Race {
+    border: 2px solid #000; /* Borda preta */
+    padding: 15px; /* Espaçamento interno */
+    margin: 20px 0; /* Espaçamento externo */
+    border-radius: 10px; /* Bordas arredondadas */
+    background-color: #f9f9f9; /* Cor de fundo */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    display: flex; /* Flexbox para alinhar os elementos */
+    flex-direction: column; /* Elementos empilhados verticalmente */
+}
+
+.Race-header {
+    display: flex; /* Flexbox para organizar imagem e título */
+    align-items: center; /* Alinha verticalmente ao centro */
+    gap: 5%; /* Espaçamento entre imagem e título */
+    margin-bottom: 10px; /* Espaçamento abaixo da linha */
+}
+
+.iconTextRace {
+    width: 15%; /* Tamanho fixo da imagem */
+    height: auto; /* Mantém a proporção */
+    object-fit: contain; /* Garante que a imagem não seja distorcida */
+}
+
+.Race-header h1 {
+    margin: 0; /* Remove margens padrão */
+    font-size: 3rem; /* Define o tamanho do texto */
+    font-weight: bold; /* Define o texto como negrito */
+    text-align: left; /* Alinha o texto à esquerda */
+    line-height: 1; /* Espaçamento entre linhas */
+}
+
+
+/* Container de combate - Falha Crítica */
+.CriticalFailure {
+    border: 2px solid #000; /* Borda preta */
+    padding: 15px; /* Espaçamento interno */
+    margin: 20px 0; /* Espaçamento externo */
+    border-radius: 10px; /* Bordas arredondadas */
+    background-color: #f9f9f9; /* Cor de fundo */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    display: flex; /* Flexbox para alinhar os elementos */
+    flex-direction: column; /* Elementos empilhados verticalmente */
+}
+
+.CriticalFailure-header {
+    display: flex; /* Flexbox para organizar imagem e título */
+    align-items: center; /* Alinha verticalmente ao centro */
+    gap: 5%; /* Espaçamento entre imagem e título */
+    margin-bottom: 10px; /* Espaçamento abaixo da linha */
+}
+
+.iconTextCriticalFailure {
+    width: 15%; /* Tamanho fixo da imagem */
+    height: auto; /* Mantém a proporção */
+    object-fit: contain; /* Garante que a imagem não seja distorcida */
+}
+
+.CriticalFailure-header h1 {
+    margin: 0; /* Remove margens padrão */
+    font-size: 3rem; /* Define o tamanho do texto */
+    font-weight: bold; /* Define o texto como negrito */
+    text-align: left; /* Alinha o texto à esquerda */
+    line-height: 1; /* Espaçamento entre linhas */
+}
+
+
+.parag {
+    display: flex; /* Define como um contêiner flexível */
+    flex-direction: column; /* Alinha os elementos em coluna */
+    margin-top: 10px; /* Espaçamento superior para separação */
+    margin-left: 2%; /* Espaçamento superior para separação */
+    gap: 8px; /* Espaçamento entre os parágrafos */
+}
+
+.parag p {
+    margin: 0; /* Remove margens padrão */
+    padding-left: 20px; /* Define um recuo esquerdo para o marcador */
+    position: relative; /* Permite posicionar o marcador */
+    text-indent: 0; /* Remove o recuo inicial padrão */
+    font-weight: bold; /* Define o texto como negrito */
+}
+
+.parag p::before {
+    content: "º"; /* Adiciona o marcador antes do texto */
+    position: absolute; /* Posiciona o marcador */
+    left: 0; /* Alinha o marcador no início */
+    font-weight: bold; /* Negrito para o marcador */
+    color: #000; /* Cor do marcador */
 }
 
 
