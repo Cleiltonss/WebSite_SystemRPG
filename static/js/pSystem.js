@@ -10,6 +10,12 @@ document.getElementById("system-button").addEventListener("click", function () {
     window.location.href = "/system";
 });
 
+// Função para o botão "Equipamento"
+document.getElementById("equipment-button").addEventListener("click", function () {
+    // Redireciona para o arquivo pag-Sistema.html
+    window.location.href = "/equipment";
+});
+
 
 
 // Seleciona os elementos: Introdução

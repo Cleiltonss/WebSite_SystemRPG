@@ -41,6 +41,12 @@ def system():
     return render_template('pSystem.html')
 
 
+# Rota para a página dos equipamentos
+@app.route('/equipment')
+def equipment():
+    return render_template('pEquipment.html')
+
+
 if __name__ == '__main__':
     with app.app_context():
       

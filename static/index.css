@@ -1,6 +1,6 @@
 /* Barra azul (header) */
 header {
-    background-color: #007BFF; /* Fundo azul */
+    background-color: #424242; /* Fundo azul */
     color: white; /* Cor do texto branco */
     padding: 20px; /* Espaçamento interno */
     height: 30vh; /* Altura da barra azul */
@@ -39,7 +39,7 @@ header h1 {
     height: 10vh; /* Altura da barra */
     margin: 0;
     padding: 0 20px; /* Espaçamento interno para afastar do canto */
-    background-color: #FF0000; /* Fundo vermelho */
+    background-color: #432B53; /* Fundo vermelho */
     color: white; /* Cor do texto branco */
     text-align: left; /* Alinha o texto dentro do próprio container à esquerda */
     box-sizing: border-box; /* Inclui padding no cálculo total */
@@ -51,7 +51,7 @@ header h1 {
 .buttons-header button {
     background-color: #FFFFFF; /* Fundo branco */
     color: #000000; /* Texto vermelho */
-    border: 2px solid #FF0000; /* Borda vermelha */
+    border: 2px solid #A76CCF; /* Borda vermelha */
     padding: 10px 20px; /* Espaçamento interno */
     font-size: 10px; /* Tamanho do texto */
     border-radius: 5px; /* Bordas arredondadas */

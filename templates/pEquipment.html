@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipamento</title>
+    <link rel="stylesheet" href="/static/pEquipment.css">
+</head>
+<body>
+    <header class="buttons-header">
+        <button id="home-button">Inicio</button>
+        <button id="system-button">Sistema</button>
+        <button id="equipment-button">Equipamento</button>
+    </header>
+    
+    <!-- Card Wrapper -->
+    <div class="cardWrapper">
+        <div class="cardTest" id="test-section">
+            <div class="imageSection">
+                <img src="/static/images_pEquipment/kukri.png" alt="Kukri Sword" class="iconSword">
+            </div>
+            <div class="divider"></div> <!-- Linha divisória -->
+            <div class="contentSection">
+                <h3>Kukri</h3>
+                <button class="description-button" onclick="toggleDescription()">Ver Descrição</button>
+                <div class="Description" id="introduction-section" style="display: none;">
+                    <p>
+                        Uma faca dobrada comumente usada pelos gurkhas das montanhas distantes. Preferida entre os dharmapala.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/pEquipment.js"></script>
+</body>
+</html>
