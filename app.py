@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 
 # Configuração do Banco de Dados
-import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(basedir, "site_acess.db")}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Desativa alertas de mudanças desnecessárias
@@ -18,6 +18,16 @@ class ConnectionLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # Chave primária
     ip_address = db.Column(db.String(50), nullable=False)  # Endereço IP do visitante
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)  # Data e hora do acesso
+
+
+# Modelo apra salvar novos equipamentos
+class Equipment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)  # Chave primária
+    image_path = db.Column(db.String(200), nullable=False)  # Caminho da imagem
+    name = db.Column(db.String(100), nullable=False)  # Nome do equipamento
+    description = db.Column(db.Text, nullable=False)  # Descrição do equipamento
+
+
 
 # Rota para a página inicial
 @app.route('/')
@@ -42,9 +52,12 @@ def system():
 
 
 # Rota para a página dos equipamentos
-@app.route('/equipment')
+@app.route('/equipment', methods=['GET'])
 def equipment():
-    return render_template('pEquipment.html')
+    # Pega todos os equipamentos do banco de dados
+    equipment_list = Equipment.query.all()
+    return render_template('pEquipment.html', equipment_list=equipment_list)
+
 
 
 if __name__ == '__main__':

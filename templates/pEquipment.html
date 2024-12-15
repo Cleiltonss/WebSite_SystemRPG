@@ -13,24 +13,33 @@
         <button id="equipment-button">Equipamento</button>
     </header>
     
-    <!-- Card Wrapper -->
-    <div class="cardWrapper">
-        <div class="cardTest" id="test-section">
-            <div class="imageSection">
-                <img src="/static/images_pEquipment/kukri.png" alt="Kukri Sword" class="iconSword">
-            </div>
-            <div class="divider"></div> <!-- Linha divisória -->
-            <div class="contentSection">
-                <h3>Kukri</h3>
-                <button class="description-button" onclick="toggleDescription()">Ver Descrição</button>
-                <div class="Description" id="introduction-section" style="display: none;">
-                    <p>
-                        Uma faca dobrada comumente usada pelos gurkhas das montanhas distantes. Preferida entre os dharmapala.
-                    </p>
+
+    <div class="containerWrapper">
+        {% for equipment in equipment_list %}
+        <div class="cardWrapper">
+            <div class="cardTest">
+                <div class="imageSection">
+                    <img src="{{ equipment.image_path }}" alt="{{ equipment.name }}" class="iconSword">
+                </div>
+                <div class="divider"></div>
+                <div class="contentSection">
+                    <h3>{{ equipment.name }}</h3>
+                    <button class="description-button" onclick="toggleDescription()">Ver Descrição</button>
+                    <div class="Description hidden">{{ equipment.description }}</div>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
+
+    
+
+    
+
+    
+    
+    
+    
 
     <script src="/static/js/pEquipment.js"></script>
 </body>

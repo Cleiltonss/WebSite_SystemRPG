@@ -35,18 +35,28 @@
 
 
 
+/* Contêiner geral para todos os wrappers */
+.containerWrapper {
+    display: flex; /* Alinha os wrappers lado a lado */
+    flex-wrap: wrap; /* Permite quebra de linha quando necessário */
+    gap: 20px; /* Espaçamento entre os wrappers */
+    justify-content: flex-start; /* Alinha os itens ao início (esquerda) */
+    padding: 20px; /* Espaçamento interno para o container */
+    margin: 0 auto; /* Centraliza horizontalmente o container */
+}
+
 /* Wrapper para criar o retângulo com bordas arredondadas */
 .cardWrapper {
     display: flex;
     justify-content: center; /* Centraliza o card horizontalmente */
-    align-items: center; /* Centraliza o card verticalmente, se necessário */
+    align-items: center; /* Centraliza o card verticalmente */
     background-color: #F9F9F9; /* Fundo geral */
     border: 2px solid #A76CCF; /* Cor da borda */
     border-radius: 15px; /* Bordas arredondadas */
     padding: 20px; /* Espaçamento interno */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
-    max-width: 300px; /* Define uma largura máxima */
-    margin: 20px auto; /* Espaçamento em volta e centralização automática */
+    width: 300px; /* Define uma largura fixa */
+    height: auto; /* Permite que o tamanho do wrapper se ajuste ao conteúdo */
 }
 
 /* Card principal */
