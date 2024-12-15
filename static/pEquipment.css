@@ -31,9 +31,91 @@
 
 
 
+/* Contêiner principal da seção Exploração */
+.fixed-category {
+    position: relative;
+    padding: 20px;
+    background-color: #F9F9F9;
+    border: 2px solid #A76CCF;
+    border-radius: 10px;
+    text-align: center;
+    overflow: hidden; /* Evita conteúdo ultrapassando */
+}
+
+/* Contêiner que centraliza a imagem vertical e horizontalmente */
+.exploration-container {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    height: 60vh; /* Define altura fixa */
+    margin: 0; /* Remove margens */
+    position: relative; /* Garante que a posição seja fixa */
+    z-index: 1; /* Mantém a imagem em seu plano original */
+}
+
+/* Imagem da exploração */
+.iconTextExploration {
+    max-height: 50vh; /* Define uma altura máxima */
+    width: auto; /* Mantém a proporção */
+    object-fit: contain; /* Evita distorção */
+    position: absolute; /* Mantém a imagem fixa dentro do contêiner */
+    top: 50%; /* Move a imagem 50% para baixo */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Corrige o deslocamento exato */
+}
+
+/* Contêiner do texto */
+.exploration-text-container {
+    text-align: left; /* Alinha o texto à esquerda */
+    margin-top: 20px; /* Espaçamento entre a imagem e o texto */
+    padding: 0 10px; /* Define espaçamento lateral */
+}
+
+/* Estilo do texto */
+.exploration-text {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+    margin: 0; /* Remove margens padrão */
+}
 
 
-/* Contêiner geral das categorias */
+.parag {
+    display: flex; /* Define como um contêiner flexível */
+    flex-direction: column; /* Alinha os elementos em coluna */
+    margin-top: 10px; /* Espaçamento superior para separação */
+    margin-left: 2%; /* Espaçamento superior para separação */
+    gap: 8px; /* Espaçamento entre os parágrafos */
+}
+
+.parag p {
+    margin: 0; /* Remove margens padrão */
+    padding-left: 20px; /* Define um recuo esquerdo para o marcador */
+    position: relative; /* Permite posicionar o marcador */
+    text-indent: 0; /* Remove o recuo inicial padrão */
+}
+
+.parag p::before {
+    content: "º"; /* Adiciona o marcador antes do texto */
+    position: absolute; /* Posiciona o marcador */
+    left: 0; /* Alinha o marcador no início */
+    color: #000; /* Cor do marcador */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Contêiner geral das categorias armas */
 .categories-container {
     display: flex;
     flex-direction: column;
@@ -87,8 +169,23 @@
     height: auto;
 }
 
+/* Alinhamento à esquerda para as subcategorias */
+.subcategory-header {
+    text-align: left; /* Alinha o texto à esquerda */
+    font-size: 1.5rem; /* Tamanho da fonte */
+    color: #432B53; /* Cor do texto */
+    margin: 10px 0 20px 20px; /* Espaçamento: cima, direita, baixo, esquerda */
+    cursor: pointer; /* Indica interatividade */
+    transition: color 0.3s ease;
+}
 
-
+/* Ajuste do container para espaçamento */
+.category-section {
+    margin-bottom: 30px; /* Espaçamento entre os blocos */
+    border: 1px solid #A76CCF; /* Adiciona uma borda leve */
+    border-radius: 10px;
+    padding: 10px; /* Espaçamento interno */
+}
 
 
 
@@ -167,3 +264,7 @@
     color: #333;
     display: none; /* Inicialmente escondida */
 }
+
+
+
+

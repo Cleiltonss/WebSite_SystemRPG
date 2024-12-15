@@ -20,13 +20,17 @@ class ConnectionLog(db.Model):
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)  # Data e hora do acesso
 
 
-# Modelo apra salvar novos equipamentos
+# Modelo para salvar novos equipamentos
 class Equipment(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # Chave primária
+    category = db.Column(db.String(100), nullable=False)  # Categoria principal (Armas, Armaduras)
+    nameCategory = db.Column(db.String(100), nullable=False)  # Subcategoria (Lâminas, Peitorais, etc.)
     image_path = db.Column(db.String(200), nullable=False)  # Caminho da imagem
     name = db.Column(db.String(100), nullable=False)  # Nome do equipamento
     description = db.Column(db.Text, nullable=False)  # Descrição do equipamento
-    category = db.Column(db.Text, nullable=False) # Categoria do equipamento
+
+
+
 
 
 
@@ -52,21 +56,29 @@ def system():
     return render_template('pSystem.html')
 
 
-# Rota para a página dos equipamentos
 @app.route('/equipment', methods=['GET'])
 def equipment():
     # Pega todos os equipamentos do banco de dados
     equipment_list = Equipment.query.all()
 
-    # Organiza os equipamentos por categoria
-    categories = {}
-    for equipment in equipment_list:
-        if equipment.category not in categories:
-            categories[equipment.category] = []
-        categories[equipment.category].append(equipment)
+    # Estrutura fixa para seções
+    categories = {
+        "Armas": {},
+        "Armaduras e Vestimentas": {}
+    }
 
-    # Passa as categorias para o template
+    # Organiza os equipamentos em subcategorias
+    for equipment in equipment_list:
+        if equipment.category in categories:
+            if equipment.nameCategory not in categories[equipment.category]:
+                categories[equipment.category][equipment.nameCategory] = []
+            categories[equipment.category][equipment.nameCategory].append(equipment)
+
+    # Passa os dados organizados para o template
     return render_template('pEquipment.html', categories=categories)
+
+
+
 
 
 

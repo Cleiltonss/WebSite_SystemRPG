@@ -13,31 +13,133 @@
         <button id="equipment-button">Equipamento</button>
     </header>
     
-    <!-- Contêiner das categorias -->
     <div class="categories-container">
-        {% for category, equipments in categories.items() %}
-        <div class="category-section">
-            <h2 class="category-header">{{ category }}</h2> <!-- Categoria clicável -->
-            <div class="cards-container" style="display: none;"> <!-- Cards inicialmente escondidos -->
-                {% for equipment in equipments %}
-                <div class="cardWrapper">
-                    <div class="cardTest">
-                        <div class="imageSection">
-                            <img src="{{ equipment.image_path }}" alt="{{ equipment.name }}" class="iconSword">
-                        </div>
-                        <div class="divider"></div>
-                        <div class="contentSection">
-                            <h3>{{ equipment.name }}</h3>
-                            <button class="description-button">Ver Descrição</button>
-                            <div class="Description hidden" style="display: none;">{{ equipment.description }}</div>
+
+        <!-- Seção fixa: Armas -->
+        <div class="fixed-category">
+            <h2 class="category-header">Armas</h2>
+            <div class="subcategories-container" style="display: none;">
+                {% for subcategory, equipments in categories['Armas'].items() %}
+                    <div class="category-section">
+                        <h3 class="subcategory-header">{{ subcategory }}</h3>
+                        <div class="cards-container" style="display: none;">
+                            {% for equipment in equipments %}
+                                <div class="cardWrapper">
+                                    <div class="cardTest">
+                                        <div class="imageSection">
+                                            <img src="{{ equipment.image_path }}" alt="{{ equipment.name }}" class="iconSword">
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div class="contentSection">
+                                            <h3>{{ equipment.name }}</h3>
+                                            <button class="description-button">Ver Descrição</button>
+                                            <div class="Description hidden" style="display: none;">{{ equipment.description }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
-                </div>
                 {% endfor %}
             </div>
         </div>
-        {% endfor %}
+    
+        <!-- Seção fixa: Armaduras e Vestimentas -->
+        <div class="fixed-category">
+            <h2 class="category-header">Armaduras e Vestimentas</h2>
+            <div class="subcategories-container" style="display: none;">
+                {% for subcategory, equipments in categories['Armaduras e Vestimentas'].items() %}
+                    <div class="category-section">
+                        <h3 class="subcategory-header">{{ subcategory }}</h3>
+                        <div class="cards-container" style="display: none;">
+                            {% for equipment in equipments %}
+                                <div class="cardWrapper">
+                                    <div class="cardTest">
+                                        <div class="imageSection">
+                                            <img src="{{ equipment.image_path }}" alt="{{ equipment.name }}" class="iconSword">
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div class="contentSection">
+                                            <h3>{{ equipment.name }}</h3>
+                                            <button class="description-button">Ver Descrição</button>
+                                            <div class="Description hidden" style="display: none;">{{ equipment.description }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    
+        <!-- Seção fixa: Exploração -->
+        <div class="fixed-category">
+            <h2 class="category-header">Exploração</h2>
+            <div class="exploration-content" style="display: none;">
+                <div class="exploration-container">
+                    <img src="/static/images_pEquipment/explorationEquipment.png" alt="Icon Text Exploration" class="iconTextExploration">
+                </div>
+                <div class="exploration-text-container">
+                    <p class="exploration-text">
+                        <i><h3>[Sistema de Exploração]</h3></i>
+                    </p>
+                    <p style="text-indent: 1%">
+                        Mergulhar em um labirinto é uma atividade perigosa, dificil e que requer experiência para não acabar de forma desastrosa. 
+                        Não há nada mais importante durante uma exploração do que planejamento e a capacidade de executar a maior quantidade de 
+                        opções possível. Mas para isso, você precisa de algo muito importante. Ao invés de utilizar inventários complexos, por 
+                        muitas vezes quase esquecidos durante a ação, o sistema opera por uma lógica de consumo de Recursos. Isso significa que 
+                        os personagens serão capazes de sustentar sua viagem, realizar ações especiais, e utilizar itens, tudo através dos seus 
+                        pontos de recurso.
+                    </p>
+                    <p style="text-indent: 1%">
+                        Exploradores mergulhando um labirinto não terão muita sorte de lutar carregados com mochilas pesadas, portanto é 
+                        assumido que a maior parte e mais importante da carga está com o <b>Montaria</b>.Por via de regra um grupo completamente 
+                        equipado e preparado, sem nenhuma melhoria prévia, possui <b>100 pontos de Recurso</b>. Essa quantia pode aumentar através de 
+                        melhorias na infraestrutura do Labirinto de Ida, ou então ao trazer equipamentos de carga.
+                    </p>
+                    <p class="exploration-text">
+                        
+                        <p style="text-indent: 1%">
+                            <b>Alimentação:</b>
+                            Cada membro de uma incursão precisa estar bem alimentado para encarar todo o trabalho pesado. A cada dia de exploração 
+                            passado, cada um deles, consome <b>1 ponto de Recurso</b>. Criaturas que possam se juntar ao grupo podem consumir 
+                            quantidades diferentes de recurso.
+                        </p>
+                        <p style="text-indent: 1%">
+                            <b>Cuidados Especiais:</b>
+                            Um personagem que está em situação grave de saúde (recebeu Ferimentos) necessita  de atenção especial, e também 
+                            utilizar componentes valiosos para o devolver ao seu estado normal. Nesse estado eles consomem o dobro por dia, 
+                            até estarem curados dos seus Ferimentos. Esse modificador é ignorado quando se está Acampando.
+                        </p>
+                        <p style="text-indent: 1%">
+                            <b>Acampamento:</b>
+                            Com todo o perigo e esforço envolvido no mergulho de um labirinto, é muito difícil que os exploradores tenham 
+                            qualquer descanso real, além do mínimo necessário, para se recuperar. Só é possível recuperar Vida e Númen 
+                            quando se descansa num acampamento. Pontos de Vida, todos eles, são restaurados de imediato ao descansarem. 
+                            Já os pontos de Númen mantém a regra: 1 ponto por dia. É possível <b>cozinhar</b> e <b>sintetizar itens</b> 
+                            quando se está acampando. Quaisquer efeitos impostos em equipamentos, a não ser que mágicos, são revertidos 
+                            ao descansar ao acampar. Custa <b>5 de Recursos</b>.
+                        </p>
+                        <p style="text-indent: 1%">
+                            <b>Pegar Equipamento:</b>
+                            <div class="parag">
+                                <p><b>Tocha (1 Recurso):</b> gera boa iluminação de 6m, e penumbra de 12m. Dura por 4 horas;</p>
+                                <p><b>Corda (3 Recurso):</b> uma corda de 25m de comprimento feita de material forte e firme;</p>
+                                <p><b>Escada Enrolada (6 Recurso):</b> uma escada enrolável e que pode ser fixada, tem 10m de comprimento;</p>
+                                <p><b>Corrente (4 Recurso):</b> 0m de corrente de bronze, os aros são finos;</p>
+                                <p><b>Flecha (1 Recurso):</b> uma flecha de arco variado;</p>
+                                <p><b>Piton (1 Recurso):</b> um prego gigante que serve pra prender coisas, como cordas;</p>
+                                <p><b>Equipamento Alternativo (1~3 Recurso):</b> varia em custo dependendo do equipamento.</p>
+                            </div>
+                        </p>
+                    </p>
+                </div>
+            </div>
+        </div>
+    
     </div>
+    
 
     <script src="/static/js/pEquipment.js"></script>
 </body>
