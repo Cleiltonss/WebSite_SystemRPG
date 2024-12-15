@@ -26,6 +26,7 @@ class Equipment(db.Model):
     image_path = db.Column(db.String(200), nullable=False)  # Caminho da imagem
     name = db.Column(db.String(100), nullable=False)  # Nome do equipamento
     description = db.Column(db.Text, nullable=False)  # Descrição do equipamento
+    category = db.Column(db.Text, nullable=False) # Categoria do equipamento
 
 
 
@@ -56,7 +57,19 @@ def system():
 def equipment():
     # Pega todos os equipamentos do banco de dados
     equipment_list = Equipment.query.all()
-    return render_template('pEquipment.html', equipment_list=equipment_list)
+
+    # Organiza os equipamentos por categoria
+    categories = {}
+    for equipment in equipment_list:
+        if equipment.category not in categories:
+            categories[equipment.category] = []
+        categories[equipment.category].append(equipment)
+
+    # Passa as categorias para o template
+    return render_template('pEquipment.html', categories=categories)
+
+
+
 
 
 

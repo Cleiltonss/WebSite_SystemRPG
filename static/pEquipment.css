@@ -1,112 +1,150 @@
-/* Barra vermelha com texto alinhado à esquerda */
+/* Barra com botões alinhados */
 .buttons-header {
     display: flex;
     justify-content: flex-start; /* Alinha horizontalmente o conteúdo à esquerda */
     align-items: center; /* Centraliza verticalmente */
     height: 10vh; /* Altura da barra */
-    margin: 0;
     padding: 0 20px; /* Espaçamento interno para afastar do canto */
-    background-color: #432B53; /* Fundo vermelho */
+    background-color: #432B53; /* Fundo roxo */
     color: white; /* Cor do texto branco */
-    text-align: left; /* Alinha o texto dentro do próprio container à esquerda */
-    box-sizing: border-box; /* Inclui padding no cálculo total */
     gap: 30px; /* Espaçamento padrão entre os elementos */
     margin-top: 5px;
 }
 
-/* Estilo para os botões */
+/* Botões da barra */
 .buttons-header button {
     background-color: #FFFFFF; /* Fundo branco */
-    color: #000000; /* Texto vermelho */
-    border: 2px solid #A76CCF; /* Borda vermelha */
+    color: #000000; /* Texto preto */
+    border: 2px solid #A76CCF; /* Borda roxa */
     padding: 10px 20px; /* Espaçamento interno */
-    font-size: 10px; /* Tamanho do texto */
+    font-size: 12px; /* Tamanho do texto */
     border-radius: 5px; /* Bordas arredondadas */
     cursor: pointer; /* Cursor de mão */
     transition: background-color 0.3s ease; /* Transição para hover */
 }
 
-/* Efeito ao passar o mouse sobre o botão */
 .buttons-header button:hover {
-    background-color: #FFCCCC; /* Fundo vermelho claro */
+    background-color: #D5B3E6; /* Fundo roxo claro no hover */
 }
 
 
 
 
 
-/* Contêiner geral para todos os wrappers */
-.containerWrapper {
-    display: flex; /* Alinha os wrappers lado a lado */
-    flex-wrap: wrap; /* Permite quebra de linha quando necessário */
-    gap: 20px; /* Espaçamento entre os wrappers */
-    justify-content: flex-start; /* Alinha os itens ao início (esquerda) */
-    padding: 20px; /* Espaçamento interno para o container */
-    margin: 0 auto; /* Centraliza horizontalmente o container */
-}
 
-/* Wrapper para criar o retângulo com bordas arredondadas */
-.cardWrapper {
-    display: flex;
-    justify-content: center; /* Centraliza o card horizontalmente */
-    align-items: center; /* Centraliza o card verticalmente */
-    background-color: #F9F9F9; /* Fundo geral */
-    border: 2px solid #A76CCF; /* Cor da borda */
-    border-radius: 15px; /* Bordas arredondadas */
-    padding: 20px; /* Espaçamento interno */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
-    width: 300px; /* Define uma largura fixa */
-    height: auto; /* Permite que o tamanho do wrapper se ajuste ao conteúdo */
-}
 
-/* Card principal */
-.cardTest {
+/* Contêiner geral das categorias */
+.categories-container {
     display: flex;
     flex-direction: column;
-    width: 100%; /* O card ocupa todo o espaço do wrapper */
-    border-radius: 15px; /* Mantém bordas arredondadas */
-    overflow: hidden; /* Garante que os fundos fiquem dentro das bordas */
+    gap: 40px; /* Espaçamento entre categorias */
+    margin: 20px;
 }
 
-/* Fundo e estilo para a imagem */
+/* Seção de cada categoria */
+.category-section {
+    border: 1px solid #A76CCF; /* Borda roxa ao redor */
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #F9F9F9; /* Fundo cinza claro */
+}
+
+/* Título da categoria */
+.category-header {
+    font-size: 2rem;
+    color: #432B53; /* Cor do texto */
+    cursor: pointer; /* Mostra que é clicável */
+    transition: color 0.3s ease;
+    text-align: center; /* Mantém o alinhamento horizontal intacto */
+    line-height: 60px; /* Centraliza verticalmente usando a altura da linha */
+    height: 60px; /* Define a altura total do contêiner */
+}
+
+.category-header:hover {
+    color: #A76CCF; /* Altera a cor ao passar o mouse */
+}
+
+
+/* Contêiner de cards */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebra de linha */
+    gap: 20px; /* Espaçamento entre os cards */
+    margin-top: 20px;
+}
+
+/* Cards individuais */
+.cardWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F9F9F9;
+    border: 2px solid #A76CCF;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    height: auto;
+}
+
+
+
+
+
+
+
+
+
+
+/* Estilo principal do card */
+.cardTest {
+    display: flex;
+    flex-direction: column; /* Organização vertical */
+    width: 100%; /* Card ocupa todo o espaço do wrapper */
+    border-radius: 15px; /* Bordas arredondadas */
+    overflow: hidden; /* Garante que o conteúdo fique dentro */
+}
+
+/* Seção de imagem no card */
 .imageSection {
-    background-color: #E5E5E5; /* Fundo claro para a imagem */
+    background-color: #E5E5E5; /* Fundo cinza claro */
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
 }
 
-/* Estilo da imagem */
+/* Estilo da imagem do card */
 .iconSword {
-    width: 150px; /* Reduz tamanho da imagem */
+    width: 150px; /* Largura máxima da imagem */
     height: auto;
 }
 
-/* Linha divisória entre a imagem e o conteúdo */
+/* Linha divisória entre imagem e conteúdo */
 .divider {
     height: 2px; /* Espessura da linha */
     background-color: #A76CCF; /* Cor da linha */
-    width: 100%; /* Linha ocupa toda a largura */
+    width: 100%; /* Ocupa toda a largura */
 }
 
-/* Fundo e estilo para o conteúdo */
+/* Conteúdo do card */
 .contentSection {
-    background-color: #F7EBFF; /* Alterar cor do fundo do conteúdo */
+    background-color: #F7EBFF; /* Fundo lilás */
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 15px;
-    border-top: 1px solid #D4A8FF; /* Linha leve entre a divisão e conteúdo */
+    border-top: 1px solid #D4A8FF; /* Linha leve acima do conteúdo */
 }
 
-/* Estilo do texto e botão */
+/* Estilo do título do card */
 .contentSection h3 {
     margin: 10px 0;
     font-size: 18px;
     color: #333;
 }
 
+/* Botão para alternar descrição */
 .description-button {
     background-color: #A76CCF;
     color: #FFF;
@@ -115,14 +153,14 @@
     margin-top: 10px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-/* Efeito ao passar o mouse */
 .description-button:hover {
-    background-color: #844BA3;
+    background-color: #844BA3; /* Fundo mais escuro no hover */
 }
 
-/* Estilização da descrição */
+/* Estilo da descrição do card */
 .Description {
     margin-top: 10px;
     font-size: 14px;

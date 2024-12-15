@@ -13,33 +13,31 @@
         <button id="equipment-button">Equipamento</button>
     </header>
     
-
-    <div class="containerWrapper">
-        {% for equipment in equipment_list %}
-        <div class="cardWrapper">
-            <div class="cardTest">
-                <div class="imageSection">
-                    <img src="{{ equipment.image_path }}" alt="{{ equipment.name }}" class="iconSword">
+    <!-- Contêiner das categorias -->
+    <div class="categories-container">
+        {% for category, equipments in categories.items() %}
+        <div class="category-section">
+            <h2 class="category-header">{{ category }}</h2> <!-- Categoria clicável -->
+            <div class="cards-container" style="display: none;"> <!-- Cards inicialmente escondidos -->
+                {% for equipment in equipments %}
+                <div class="cardWrapper">
+                    <div class="cardTest">
+                        <div class="imageSection">
+                            <img src="{{ equipment.image_path }}" alt="{{ equipment.name }}" class="iconSword">
+                        </div>
+                        <div class="divider"></div>
+                        <div class="contentSection">
+                            <h3>{{ equipment.name }}</h3>
+                            <button class="description-button">Ver Descrição</button>
+                            <div class="Description hidden" style="display: none;">{{ equipment.description }}</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="divider"></div>
-                <div class="contentSection">
-                    <h3>{{ equipment.name }}</h3>
-                    <button class="description-button" onclick="toggleDescription()">Ver Descrição</button>
-                    <div class="Description hidden">{{ equipment.description }}</div>
-                </div>
+                {% endfor %}
             </div>
         </div>
         {% endfor %}
     </div>
-
-    
-
-    
-
-    
-    
-    
-    
 
     <script src="/static/js/pEquipment.js"></script>
 </body>
