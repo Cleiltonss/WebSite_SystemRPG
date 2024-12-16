@@ -1,30 +1,34 @@
-/* Barra com botões alinhados */
+/* Barra vermelha com texto alinhado à esquerda */
 .buttons-header {
     display: flex;
     justify-content: flex-start; /* Alinha horizontalmente o conteúdo à esquerda */
     align-items: center; /* Centraliza verticalmente */
     height: 10vh; /* Altura da barra */
+    margin: 0;
     padding: 0 20px; /* Espaçamento interno para afastar do canto */
-    background-color: #432B53; /* Fundo roxo */
+    background-color: #432B53; /* Fundo vermelho */
     color: white; /* Cor do texto branco */
+    text-align: left; /* Alinha o texto dentro do próprio container à esquerda */
+    box-sizing: border-box; /* Inclui padding no cálculo total */
     gap: 30px; /* Espaçamento padrão entre os elementos */
     margin-top: 5px;
 }
 
-/* Botões da barra */
+/* Estilo para os botões */
 .buttons-header button {
     background-color: #FFFFFF; /* Fundo branco */
-    color: #000000; /* Texto preto */
-    border: 2px solid #A76CCF; /* Borda roxa */
+    color: #000000; /* Texto vermelho */
+    border: 2px solid #A76CCF; /* Borda vermelha */
     padding: 10px 20px; /* Espaçamento interno */
-    font-size: 12px; /* Tamanho do texto */
+    font-size: 10px; /* Tamanho do texto */
     border-radius: 5px; /* Bordas arredondadas */
     cursor: pointer; /* Cursor de mão */
     transition: background-color 0.3s ease; /* Transição para hover */
 }
 
+/* Efeito ao passar o mouse sobre o botão */
 .buttons-header button:hover {
-    background-color: #D5B3E6; /* Fundo roxo claro no hover */
+    background-color: #FFCCCC; /* Fundo vermelho claro */
 }
 
 

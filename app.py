@@ -78,7 +78,10 @@ def equipment():
     return render_template('pEquipment.html', categories=categories)
 
 
-
+# Rota para a página do personagem
+@app.route('/character')
+def character():
+    return render_template('pCharacter.html')
 
 
 

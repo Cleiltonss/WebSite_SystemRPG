@@ -11,6 +11,12 @@ document.getElementById("equipment-button").addEventListener("click", function (
     window.location.href = "/equipment";
 });
 
+// Função para o botão "Personagem"
+document.getElementById("character-button").addEventListener("click", function () {
+    // Redireciona para o arquivo pag-Sistema.html
+    window.location.href = "/character";
+});
+
 // Alternar exibição das seções fixas
 document.querySelectorAll('.category-header').forEach(header => {
     header.addEventListener('click', () => {

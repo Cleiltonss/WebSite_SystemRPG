@@ -40,29 +40,29 @@ if __name__ == "__main__":
 
     equipments = [
         # Armas
-        {
-            "category": "Armas",
-            "nameCategory": "Lâminas",
-            "image_path": "/static/images_pEquipment/kukri.png",
-            "name": "Kukri",
-            "description": "Uma faca dobrada comumente usada pelos gurkhas das montanhas distantes."
+        # {
+        #     "category": "Armas",
+        #     "nameCategory": "Lâminas",
+        #     "image_path": "/static/images_pEquipment/kukri.png",
+        #     "name": "Kukri",
+        #     "description": "Uma faca dobrada comumente usada pelos gurkhas das montanhas distantes."
             
-        },
-        {
-            "category": "Armas",
-            "nameCategory": "Machados/Martelos/Maças",
-            "image_path": "/static/images_pEquipment/machado.png",
-            "name": "Machado",
-            "description": "Ferramenta de corte que é construída com uma cunha fixada perpendicularmente a um cabo de madeira ou metal"
+        # },
+        # {
+        #     "category": "Armas",
+        #     "nameCategory": "Machados/Martelos/Maças",
+        #     "image_path": "/static/images_pEquipment/machado.png",
+        #     "name": "Machado",
+        #     "description": "Ferramenta de corte que é construída com uma cunha fixada perpendicularmente a um cabo de madeira ou metal"
             
-        },
+        # },
 
 
         # Armaduras e Vestimentas
         {
             "category": "Armaduras e Vestimentas",
             "nameCategory": "Armadura Leve",
-            "image_path": "/static/images_pEquipment/linothorax.jpg",
+            "image_path": "/static/images_pEquipment/linothorax.png",
             "name": "Linothorax",
             "description": "Peitoral feito de linho com juntas de couro e um saiote em camadas para proteção"
             
