@@ -1,0 +1,56 @@
+/* ======================= */
+/*        HOME PAGE        */
+/* ======================= */
+
+/* Reset */
+.system-page, 
+.system-page html, 
+.system-page body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #FFFFFF;  /* fundo branco escuro */
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  height: 100vh; /* garante altura total */
+  width: 100vw;  /* garante largura total */
+  overflow-x: hidden;
+}
+
+/* Container da home */
+.home-page {
+  min-height: 100vh;
+  background-color: #FFFFFF; /* fundo branco local */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #000000;
+  font-family: Arial, sans-serif;
+}
+
+.home-page .header-content {
+  background-color: #424242;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.home-page .header-image {
+  height: 8rem;
+  width: auto;
+  object-fit: contain;
+}
+
+.home-page h1 {
+  color: white;
+  font-size: 2.5rem;
+  margin: 0;
+  text-align: center;
+}
+

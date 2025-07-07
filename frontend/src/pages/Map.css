@@ -1,0 +1,29 @@
+/* ======================== */
+/*        MAP PAGE          */
+/* ======================== */
+
+/* Reset */
+.map-page, 
+.map-page html, 
+.map-page body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #333333;  /* fundo cinza escuro */
+  color: #fff;
+  font-family: Arial, sans-serif;
+  height: 100vh; /* garante altura total */
+  width: 100vw;  /* garante largura total */
+  overflow-x: hidden;
+}
+
+.map-page {
+  min-height: 100vh;
+  background-color: #333333; /* fundo escuro, ajuste conforme o que pediu */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #FFFFFF; /* texto claro para contraste */
+  font-family: Arial, sans-serif;
+}
+

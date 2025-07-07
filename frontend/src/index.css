@@ -1,0 +1,16 @@
+/* reset muito básico e neutro, sem mexer em fundo e cor */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* NÃO mexe em background-color nem em color */
+  font-family: inherit; /* para herdar da página, não forçar fonte */
+}

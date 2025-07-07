@@ -1,0 +1,30 @@
+/* ======================== */
+/*     EQUIPMENT PAGE       */
+/* ======================== */
+
+/* Reset */
+.equipment-page, 
+.equipment-page html, 
+.equipment-page body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #FFFFFF;  /* fundo branco escuro */
+  color: #fff;
+  font-family: Arial, sans-serif;
+  height: 100vh; /* garante altura total */
+  width: 100vw;  /* garante largura total */
+  overflow-x: hidden;
+}
+
+/* Container de equipamento */
+.equipment-page {
+  min-height: 100vh;
+  background-color: #FFFFFF; /* fundo branco local */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #000000;
+  font-family: Arial, sans-serif;
+}
+

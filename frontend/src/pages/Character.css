@@ -1,0 +1,30 @@
+/* ======================== */
+/*     CHARACTER PAGE       */
+/* ======================== */
+
+/* Reset */
+.character-page, 
+.character-page html, 
+.character-page body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #FFFFFF;  /* fundo branco escuro */
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  height: 100vh; /* garante altura total */
+  width: 100vw;  /* garante largura total */
+  overflow-x: hidden;
+}
+
+/* Container de personagem */
+.character-page {
+  min-height: 100vh;
+  background-color: #FFFFFF; /* fundo branco local */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #000000;
+  font-family: Arial, sans-serif;
+}
+
