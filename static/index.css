@@ -1,0 +1,65 @@
+/* Barra azul (header) */
+header {
+    background-color: #424242; /* Fundo azul */
+    color: white; /* Cor do texto branco */
+    padding: 20px; /* Espaçamento interno */
+    height: 30vh; /* Altura da barra azul */
+    display: flex; /* Organiza os elementos horizontalmente */
+    justify-content: center; /* Centraliza horizontalmente o texto */
+    align-items: center; /* Centraliza verticalmente os itens dentro do cabeçalho */
+    position: relative; /* Define o contexto para a posição absoluta da imagem */
+    box-sizing: border-box; /* Inclui o padding no cálculo total */
+}
+
+/* Estilo para a imagem */
+.header-image {
+    position: absolute; /* Remove a imagem do fluxo normal */
+    left: 20px; /* Posiciona a imagem no canto esquerdo */
+    top: 50%; /* Centraliza verticalmente a imagem em relação ao header */
+    transform: translateY(-50%); /* Ajusta a posição vertical */
+    height: 210px; /* Altura fixa para a imagem */
+    width: auto; /* Ajusta a largura proporcionalmente */
+    object-fit: contain; /* Garante que a imagem não seja distorcida */
+}
+
+/* Estilo para o título */
+header h1 {
+    font-size: 2.5em; /* Tamanho do texto */
+    margin: 0; /* Remove margens padrão */
+    text-align: center; /* Centraliza o texto */
+    font-family: Arial, sans-serif; /* Fonte moderna */
+}
+
+
+/* Barra vermelha com texto alinhado à esquerda */
+.buttons-header {
+    display: flex;
+    justify-content: flex-start; /* Alinha horizontalmente o conteúdo à esquerda */
+    align-items: center; /* Centraliza verticalmente */
+    height: 10vh; /* Altura da barra */
+    margin: 0;
+    padding: 0 20px; /* Espaçamento interno para afastar do canto */
+    background-color: #432B53; /* Fundo vermelho */
+    color: white; /* Cor do texto branco */
+    text-align: left; /* Alinha o texto dentro do próprio container à esquerda */
+    box-sizing: border-box; /* Inclui padding no cálculo total */
+    gap: 30px; /* Espaçamento padrão entre os elementos */
+    margin-top: 5px;
+}
+
+/* Estilo para os botões */
+.buttons-header button {
+    background-color: #FFFFFF; /* Fundo branco */
+    color: #000000; /* Texto vermelho */
+    border: 2px solid #A76CCF; /* Borda vermelha */
+    padding: 10px 20px; /* Espaçamento interno */
+    font-size: 10px; /* Tamanho do texto */
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de mão */
+    transition: background-color 0.3s ease; /* Transição para hover */
+}
+
+/* Efeito ao passar o mouse sobre o botão */
+.buttons-header button:hover {
+    background-color: #FFCCCC; /* Fundo vermelho claro */
+}

@@ -1,0 +1,274 @@
+/* Barra vermelha com texto alinhado à esquerda */
+.buttons-header {
+    display: flex;
+    justify-content: flex-start; /* Alinha horizontalmente o conteúdo à esquerda */
+    align-items: center; /* Centraliza verticalmente */
+    height: 10vh; /* Altura da barra */
+    margin: 0;
+    padding: 0 20px; /* Espaçamento interno para afastar do canto */
+    background-color: #432B53; /* Fundo vermelho */
+    color: white; /* Cor do texto branco */
+    text-align: left; /* Alinha o texto dentro do próprio container à esquerda */
+    box-sizing: border-box; /* Inclui padding no cálculo total */
+    gap: 30px; /* Espaçamento padrão entre os elementos */
+    margin-top: 5px;
+}
+
+/* Estilo para os botões */
+.buttons-header button {
+    background-color: #FFFFFF; /* Fundo branco */
+    color: #000000; /* Texto vermelho */
+    border: 2px solid #A76CCF; /* Borda vermelha */
+    padding: 10px 20px; /* Espaçamento interno */
+    font-size: 10px; /* Tamanho do texto */
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de mão */
+    transition: background-color 0.3s ease; /* Transição para hover */
+}
+
+/* Efeito ao passar o mouse sobre o botão */
+.buttons-header button:hover {
+    background-color: #FFCCCC; /* Fundo vermelho claro */
+}
+
+
+
+
+
+/* Contêiner principal da seção Exploração */
+.fixed-category {
+    position: relative;
+    padding: 20px;
+    background-color: #F9F9F9;
+    border: 2px solid #A76CCF;
+    border-radius: 10px;
+    text-align: center;
+    overflow: hidden; /* Evita conteúdo ultrapassando */
+}
+
+/* Contêiner que centraliza a imagem vertical e horizontalmente */
+.exploration-container {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    height: 60vh; /* Define altura fixa */
+    margin: 0; /* Remove margens */
+    position: relative; /* Garante que a posição seja fixa */
+    z-index: 1; /* Mantém a imagem em seu plano original */
+}
+
+/* Imagem da exploração */
+.iconTextExploration {
+    max-height: 50vh; /* Define uma altura máxima */
+    width: auto; /* Mantém a proporção */
+    object-fit: contain; /* Evita distorção */
+    position: absolute; /* Mantém a imagem fixa dentro do contêiner */
+    top: 50%; /* Move a imagem 50% para baixo */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Corrige o deslocamento exato */
+}
+
+/* Contêiner do texto */
+.exploration-text-container {
+    text-align: left; /* Alinha o texto à esquerda */
+    margin-top: 20px; /* Espaçamento entre a imagem e o texto */
+    padding: 0 10px; /* Define espaçamento lateral */
+}
+
+/* Estilo do texto */
+.exploration-text {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+    margin: 0; /* Remove margens padrão */
+}
+
+
+.parag {
+    display: flex; /* Define como um contêiner flexível */
+    flex-direction: column; /* Alinha os elementos em coluna */
+    margin-top: 10px; /* Espaçamento superior para separação */
+    margin-left: 2%; /* Espaçamento superior para separação */
+    gap: 8px; /* Espaçamento entre os parágrafos */
+}
+
+.parag p {
+    margin: 0; /* Remove margens padrão */
+    padding-left: 20px; /* Define um recuo esquerdo para o marcador */
+    position: relative; /* Permite posicionar o marcador */
+    text-indent: 0; /* Remove o recuo inicial padrão */
+}
+
+.parag p::before {
+    content: "º"; /* Adiciona o marcador antes do texto */
+    position: absolute; /* Posiciona o marcador */
+    left: 0; /* Alinha o marcador no início */
+    color: #000; /* Cor do marcador */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Contêiner geral das categorias armas */
+.categories-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* Espaçamento entre categorias */
+    margin: 20px;
+}
+
+/* Seção de cada categoria */
+.category-section {
+    border: 1px solid #A76CCF; /* Borda roxa ao redor */
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #F9F9F9; /* Fundo cinza claro */
+}
+
+/* Título da categoria */
+.category-header {
+    font-size: 2rem;
+    color: #432B53; /* Cor do texto */
+    cursor: pointer; /* Mostra que é clicável */
+    transition: color 0.3s ease;
+    text-align: center; /* Mantém o alinhamento horizontal intacto */
+    line-height: 60px; /* Centraliza verticalmente usando a altura da linha */
+    height: 60px; /* Define a altura total do contêiner */
+}
+
+.category-header:hover {
+    color: #A76CCF; /* Altera a cor ao passar o mouse */
+}
+
+
+/* Contêiner de cards */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebra de linha */
+    gap: 20px; /* Espaçamento entre os cards */
+    margin-top: 20px;
+}
+
+/* Cards individuais */
+.cardWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F9F9F9;
+    border: 2px solid #A76CCF;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    height: auto;
+}
+
+/* Alinhamento à esquerda para as subcategorias */
+.subcategory-header {
+    text-align: left; /* Alinha o texto à esquerda */
+    font-size: 1.5rem; /* Tamanho da fonte */
+    color: #432B53; /* Cor do texto */
+    margin: 10px 0 20px 20px; /* Espaçamento: cima, direita, baixo, esquerda */
+    cursor: pointer; /* Indica interatividade */
+    transition: color 0.3s ease;
+}
+
+/* Ajuste do container para espaçamento */
+.category-section {
+    margin-bottom: 30px; /* Espaçamento entre os blocos */
+    border: 1px solid #A76CCF; /* Adiciona uma borda leve */
+    border-radius: 10px;
+    padding: 10px; /* Espaçamento interno */
+}
+
+
+
+
+
+
+
+/* Estilo principal do card */
+.cardTest {
+    display: flex;
+    flex-direction: column; /* Organização vertical */
+    width: 100%; /* Card ocupa todo o espaço do wrapper */
+    border-radius: 15px; /* Bordas arredondadas */
+    overflow: hidden; /* Garante que o conteúdo fique dentro */
+}
+
+/* Seção de imagem no card */
+.imageSection {
+    background-color: #E5E5E5; /* Fundo cinza claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+/* Estilo da imagem do card */
+.iconSword {
+    width: 150px; /* Largura máxima da imagem */
+    height: auto;
+}
+
+/* Linha divisória entre imagem e conteúdo */
+.divider {
+    height: 2px; /* Espessura da linha */
+    background-color: #A76CCF; /* Cor da linha */
+    width: 100%; /* Ocupa toda a largura */
+}
+
+/* Conteúdo do card */
+.contentSection {
+    background-color: #F7EBFF; /* Fundo lilás */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-top: 1px solid #D4A8FF; /* Linha leve acima do conteúdo */
+}
+
+/* Estilo do título do card */
+.contentSection h3 {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+/* Botão para alternar descrição */
+.description-button {
+    background-color: #A76CCF;
+    color: #FFF;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.description-button:hover {
+    background-color: #844BA3; /* Fundo mais escuro no hover */
+}
+
+/* Estilo da descrição do card */
+.Description {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    display: none; /* Inicialmente escondida */
+}
+
+
+
+
