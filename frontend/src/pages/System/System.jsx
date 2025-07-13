@@ -1,8 +1,9 @@
 // src/pages/Character.jsx
-import './System.css';
+import './System.css'; // CSS local dentro da pasta Home
+import Menu from '../../components/Menu/Menu'; // ajuste conforme estrutura real
 import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import Menu from './Menu'; // importando o componente universal do cabeçalho roxo
+
 
 export default function System() {
   const navigate = useNavigate();

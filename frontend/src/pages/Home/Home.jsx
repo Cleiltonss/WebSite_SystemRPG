@@ -1,5 +1,5 @@
-import './Home.css'; // seu CSS local
-import Menu from './Menu'; // importando o componente universal do cabeçalho roxo
+import './Home.css'; // CSS local dentro da pasta Home
+import Menu from '../../components/Menu/Menu'; // ajuste conforme estrutura real
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
         <h1>Bem-vindo ao Sistema NEMO!</h1>
       </header>
 
-      {/* Usa o componente Menu para o cabeçalho roxo com botões */}
+      {/* Cabeçalho roxo universal */}
       <Menu>
         <button onClick={() => (window.location.href = '/')}>Início</button>
         <button onClick={() => (window.location.href = '/system')}>Sistema</button>

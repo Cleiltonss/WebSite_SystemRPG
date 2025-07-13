@@ -1,12 +1,12 @@
-import './Map.css';
-import Menu from './Menu'; // importando o componente universal do cabeçalho roxo
+import './Character.css'; // CSS local dentro da pasta Home
+import Menu from '../../components/Menu/Menu'; // ajuste conforme estrutura real
 import { useNavigate } from 'react-router-dom';
 
-export default function Map() {
+export default function Character() {
   const navigate = useNavigate();
 
   return (
-    <div className="map-page">
+    <div className="character-page">
       <Menu>
         <button onClick={() => (window.location.href = '/')}>Inicio</button>
         <button onClick={() => (window.location.href = '/system')}>Sistema</button>
@@ -15,7 +15,9 @@ export default function Map() {
         <button onClick={() => (window.location.href = '/dice')}>Dados</button>
         <button onClick={() => (window.location.href = '/map')}>Mapa</button>
       </Menu>
-      {/* Conteúdo da página de mapa vai aqui */}
+      {/* Conteúdo da página de personagem vai aqui */}
     </div>
   );
 }
+
+

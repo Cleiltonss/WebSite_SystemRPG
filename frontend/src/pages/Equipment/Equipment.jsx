@@ -1,5 +1,5 @@
-import './Equipment.css';
-import Menu from './Menu'; // importando o componente universal do cabeçalho roxo
+import './Equipment.css'; // CSS local dentro da pasta Home
+import Menu from '../../components/Menu/Menu'; // ajuste conforme estrutura real
 import { useNavigate } from 'react-router-dom';
 
 export default function Equipment() {
