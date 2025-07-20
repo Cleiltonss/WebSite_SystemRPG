@@ -142,3 +142,93 @@
   box-shadow: 0 0 14px 4px rgba(255, 215, 0, 0.9);
 }
 
+/* Estilo para nomes de tokens */
+.token-name-input {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 120px;
+  margin-right: 10px;
+  transition: border-color 0.3s ease;
+}
+
+.token-name-input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  background-color: #f0f8ff;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+
+
+/* Container visual de cada linha de edição */
+.token-name-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  margin-bottom: 12px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Imagem redonda do token */
+.token-preview {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #444;
+  box-shadow: 0 0 6px rgba(0,0,0,0.5);
+}
+
+/* Input moderno e claro para nome */
+.token-name-input {
+  flex-grow: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  padding: 10px 14px;
+  font-size: 15px;
+  color: #f2f2f2;
+  border-radius: 12px;
+  transition: background 0.2s ease-in-out, box-shadow 0.2s ease;
+}
+
+.token-name-input::placeholder {
+  color: #aaa;
+}
+
+.token-name-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 8px rgba(100, 149, 237, 0.5);
+}
+
+/* Select dropdown moderno */
+.initiative-select {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #ddd;
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.initiative-select:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* Para manter consistência com seu tema */
+.initiative-setup h4 {
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 0.25rem;
+}

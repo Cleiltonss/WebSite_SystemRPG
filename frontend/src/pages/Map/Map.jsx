@@ -182,7 +182,7 @@ export default function Map() {
       const cellY = Math.floor(clickY / gridSize);
       const tokenX = cellX * gridSize + gridSize / 2;
       const tokenY = cellY * gridSize + gridSize / 2;
-      setTokens(prev => [...prev, { x: tokenX, y: tokenY, imageSrc: selectedTokenImage }]);
+      setTokens(prev => [...prev, { x: tokenX, y: tokenY, imageSrc: selectedTokenImage, name: `Token ${prev.length + 1}` }]);
     };
   };
 
@@ -203,39 +203,32 @@ export default function Map() {
   // Avançar turno
   const nextTurn = () => {
     if (!combatStarted || initiativeOrder.length === 0) return;
+    
 
-    setCurrentTurnIndex(prev => {
-      const isLastToken = prev === initiativeOrder.length - 1;
-      const newIndex = (prev + 1) % initiativeOrder.length;
-
-      if (isLastToken) {
-        setTurnCounter(t => t + 1);  // pode continuar aqui, mas é melhor mover para useEffect
-      }
-
-      return newIndex;
-    });
+    const isLastToken = currentTurnIndex === initiativeOrder.length - 1; 
+    setCurrentTurnIndex((currentTurnIndex + 1) % initiativeOrder.length);
+    
+    // Verifica se ele completou
+    if (isLastToken) {
+      setTurnCounter(prev => prev + 1);
+    }
   };
 
 
-
+  // Voltar jogada
   const previousMove = () => {
     if (!combatStarted || initiativeOrder.length === 0) return;
 
-    setCurrentTurnIndex(prev => {
-      const isFirstToken = prev === 0;
-      if (isFirstToken && turnCounter === 1) {
-        // Estamos no primeiro jogador do primeiro turno, não faz nada
-        return prev;
-      }
+    const isFirstToken = currentTurnIndex === 0;
 
-      const newIndex = (prev - 1 + initiativeOrder.length) % initiativeOrder.length;
+    if (isFirstToken && turnCounter === 1) {return;} // Evita voltar além do início
 
-      if (isFirstToken && turnCounter > 1) {
-        setTurnCounter(t => t - 1);
-      }
-
-      return newIndex;
-    });
+    const newIndex = (currentTurnIndex - 1 + initiativeOrder.length) % initiativeOrder.length;
+    setCurrentTurnIndex(newIndex); // Atualiza
+    
+    if (isFirstToken && turnCounter > 1) {
+      setTurnCounter(prev => prev - 1);
+    }
   };
 
   useEffect(() => {
@@ -350,12 +343,33 @@ export default function Map() {
 
         {!combatStarted && tokens.length > 0 && (
         <div className="initiative-setup">
-          <h4 style={{ color: 'white' }}>Definir Ordem de Iniciativa</h4>
+          <h4 style={{ color: 'white', marginBottom: '16px' }}>Definir Ordem de Iniciativa</h4>
+          
           {tokens.map((token, idx) => (
-            <div key={idx} className="initiative-setup-item">
-              <img src={token.imageSrc} alt={`token ${idx}`} />
-              <span>Token {idx + 1}</span>
+            <div key={idx} className="token-name-container">
+              <img
+                src={token.imageSrc}
+                alt={`token ${idx}`}
+                className="token-preview"
+              />
+              
+              <input
+                className="token-name-input"
+                type="text"
+                value={token.name}
+                onChange={(e) => {
+                  const newName = e.target.value;
+                  setTokens(prev => {
+                    const updated = [...prev];
+                    updated[idx] = { ...updated[idx], name: newName };
+                    return updated;
+                  });
+                }}
+                placeholder={`Token ${idx + 1}`}
+              />
+
               <select
+                className="initiative-select"
                 value={initiativeOrder.indexOf(idx) + 1 || ''}
                 onChange={(e) => {
                   const pos = parseInt(e.target.value) - 1;
@@ -363,8 +377,8 @@ export default function Map() {
                   setInitiativeOrder(prev => {
                     const newOrder = [...prev];
                     const currentIdx = newOrder.indexOf(idx);
-                    if (currentIdx !== -1) newOrder.splice(currentIdx, 1); // remove
-                    newOrder.splice(pos, 0, idx); // adiciona na nova posição
+                    if (currentIdx !== -1) newOrder.splice(currentIdx, 1);
+                    newOrder.splice(pos, 0, idx);
                     return newOrder;
                   });
                 }}
@@ -377,7 +391,8 @@ export default function Map() {
             </div>
           ))}
         </div>
-      )}
+        )}
+
 
 
         {combatStarted && (
@@ -386,7 +401,7 @@ export default function Map() {
             {initiativeOrder.map((tokenIndex, idx) => (
               <div key={idx} className="initiative-token">
                 <img src={tokens[tokenIndex].imageSrc} alt={`token ${idx}`} />
-                <span>Token {tokenIndex + 1}</span>
+                <span>{tokens[tokenIndex].name}</span>
                 {idx === currentTurnIndex && <strong> ← Ativo</strong>}
                 <button onClick={() => moveInitiative(idx, -1)}>↑</button>
                 <button onClick={() => moveInitiative(idx, 1)}>↓</button>
