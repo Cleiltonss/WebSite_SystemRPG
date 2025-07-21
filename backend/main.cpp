@@ -1,9 +1,12 @@
+#include <iostream>
 #include <random>
+#include <chrono>
+using namespace std; // Avoid using the std::function variable
 
-extern "C" {
-    int rollDice() {
-        static std::mt19937 gen(42);  // Fixed seed for now (will return to randomness later)
-        static std::uniform_int_distribution<> dis(1, 6);
-        return dis(gen);
-    }
+int main() {
+    // Generate all the entropy to the system    
+    random_device rd;
+
+    // Verify the entropy (0.0 = fallback | > 0 = true source)
+    cout << "[DEBUG] Entropia detectada: " << rd.entropy() << "\n"; 
 }
