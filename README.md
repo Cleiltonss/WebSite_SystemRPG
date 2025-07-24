@@ -1,46 +1,80 @@
-# 🧙‍♂️ Sistema NEMO – Interactive RPG Platform Powered by C++
+# 🧙‍♂️ Sistema NEMO – Tactical Interactive RPG Platform
 
-**Sistema NEMO** is an immersive and interactive tabletop RPG platform designed to combine **modern web development** with **C++ programming via WebAssembly**. This project is built to help users enjoy RPG gameplay while also serving as a training ground for C++ logic embedded into a real application.
+**Sistema NEMO** is a tactical RPG platform built with **React**, designed for game masters and players who want an immersive, intuitive, and responsive turn-based combat experience.
+
+> This project combines modern web technologies with custom logic for initiative tracking, movement, and dice rolls—creating a solid foundation for online or in-person RPG sessions.
 
 ---
 
-## 🔮 Main Features
+## 🚀 Current Features
 
-- 🎲 **3D Dice Roll Animation Powered by C++ (WebAssembly)**  
-  A fully interactive 3D dice roll using Three.js. The random result is calculated using a C++ algorithm compiled into WebAssembly for maximum performance and realism.
+### 🎲 Interactive Dice Rolls
+- Realistic dice animation and sound.
+- Roll history displayed in the interface.
+- Easily extensible for different dice types.
 
-- 🧠 **RPG System: Characters, Rules, and Equipment**  
-  Navigate through individual pages to manage your RPG system rules, characters, and gear—each section modular and visually polished.
+### 🗺️ Tactical Map with Grid
+- Upload your own image to use as a battle map.
+- Overlaid grid for tactical movement (1m² per cell).
+- Add, position, and move tokens on the map.
 
-- 🗺️ **Interactive Tactical Map with 1m² Grid**  
-  Upload and display terrain maps divided into a 1m² grid to simulate tactical movement and combat positioning in your campaigns.
+### ⚔️ Turn-Based Combat System
+- Sorted initiative list shown beside the map.
+- Tokens follow the pre-set initiative order.
+- Only the current token in turn can be moved.
+- Interface to edit initiative order before combat starts.
+- Turn counter is displayed.
 
-- 🐱 **Animated Companion**  
-  The character *Cutie Katie* reacts visually when you roll the dice, adding personality and charm to the interface.
-
-- 📷 **Custom Image Uploads**  
-  Easily upload custom terrain images to use as battle maps in your campaign.
+### 🧩 Modular and Responsive Interface
+- Sidebar control panel (initiative list, combat controls).
+- Centered map with zoom support.
+- UI built with [shadcn/ui](https://ui.shadcn.com) and styled with Tailwind CSS.
 
 ---
 
 ## ⚙️ Technologies Used
 
-- **Frontend**: HTML, CSS, JavaScript, [Three.js](https://threejs.org)  
-- **Backend**: Python (Flask)  
-- **Logic Layer**: C++ compiled with Emscripten to WebAssembly  
-- **Visuals**: Responsive and fully customizable layout for tabletop environments
+| Technology           | Description                                       |
+|----------------------|---------------------------------------------------|
+| **React + Vite**     | Modern frontend framework for interactive apps    |
+| **Tailwind CSS**     | Utility-first responsive styling                  |
+| **Shadcn UI**        | Accessible, themeable UI components               |
+| **Lucide Icons**     | Clean and lightweight icon set                    |
+| **Framer Motion**    | Smooth animation and motion effects               |
+| **C++ via WebAssembly** | Core game logic (e.g., dice, validation, AI) with high performance |
 
 ---
 
-## 💡 Project Goals
+## 🔄 Project Evolution
 
-Sistema NEMO was born from the desire to make **C++ learning visual and hands-on**. Instead of building traditional console applications, this project lets you implement and test real C++ logic (randomizers, movement validators, combat resolution, etc.) in a real RPG interface.
+**Sistema NEMO** started as a basic web interface built with **HTML, CSS, and vanilla JavaScript**, focused on simple RPG mechanics like dice rolling and static map display. As the scope and ambition of the project grew, a migration to a more modern and scalable architecture became necessary.
+
+### 🚀 From Static HTML to React SPA
+
+The original static site evolved into a full **Single Page Application (SPA)** using **React + Vite**, bringing:
+
+- Better UI component modularity  
+- Easier scalability and interactivity  
+- Clean state and effect management  
+
+### 🧠 From JS Randomness to C++ Game Logic
+
+The basic `Math.random()`-based logic in JavaScript is now being replaced by **C++ code compiled to WebAssembly**, enabling:
+
+- Higher performance and precise control over randomness  
+- Realistic simulations, physics-based rolls, and rule validation  
+- A hands-on learning experience with C++ in a real-world project  
+
+This transformation turned the platform into more than just a visual tool—it's now a **real-time logic sandbox**, where **C++ and React work together** to drive an intelligent, modular RPG system.
 
 ---
 
-## 📚 Coming Soon
+## 🎯 Upcoming Features
 
-- 🎭 Procedural NPC Generator using C++ logic  
-- 🧮 Damage Expression Evaluator (e.g., `2d6 + 3`)  
-- ⚔️ Turn-Based Combat Simulator  
-- 🧱 Movement Validator with Grid Obstacle Detection
+- ✅ Editable initiative order UI  
+- 🔄 3D Dice Roll animation using Three.js + WebAssembly  
+- 🧮 Movement validator with obstacle detection on the grid  
+- 🎭 Procedural NPC generator  
+- 🧠 Custom rule engine and character sheet integration  
+
+
