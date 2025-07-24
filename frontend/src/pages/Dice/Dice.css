@@ -27,3 +27,158 @@
   font-family: Arial, sans-serif;
 }
 
+/* Caixa de comandos roxa */
+.dice-command-box {
+  background-color: rgba(165, 0, 236, 0.79); /* Roxo escuro azulado complementar */
+  padding: 2rem 5vw;
+  margin: 2rem auto 0;
+  max-width: 1280px;
+  width: 100%;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap; /* mantém responsividade */
+}
+
+/* Campo de entrada */
+.dice-command-box input {
+  padding: 0.5rem;
+  width: 201px;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+}
+
+/* Botão */
+.dice-command-box button {
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #A76CCF;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.dice-command-box button:hover {
+  background-color: #FFCCCC;
+}
+
+/* Mensagem de erro */
+.dice-error {
+  color: red;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Resultados */
+.dice-results {
+  max-width: 1280px;
+  margin: 2rem auto 0;
+  padding: 1rem 5vw;
+  background-color: #2D1B35; /* Roxo escuro complementar */
+  border-radius: 12px;
+}
+
+.dice-header {
+  color: white;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.success-margin-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #4b0082; /* roxo escuro */
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 8px #9d4edd99;
+  margin-left: auto;
+  min-width: 120px;
+  height: fit-content;
+}
+
+.success-margin-box label {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.success-margin-box input {
+  width: 100%;
+  padding: 0.4rem;
+  border-radius: 4px;
+  border: none;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Total Sucessos */
+.dice-success-count {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-top: 1.2rem;
+  text-align: center;
+  background-color: #3a0a5e; /* roxo escuro padrão */
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 12px #a855f7;
+  color: #d58aff; /* cor padrão roxa clara */
+  transition: all 0.3s ease;
+}
+
+/* Número padrão branco */
+.dice-success-count .dice-success-number {
+  font-size: 1.6rem;
+  margin-left: 8px;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+/* Número positivo - verde vibrante e brilho forte */
+.dice-success-count .dice-success-number.dice-success-positive {
+  color: #7CFC00; /* verde limão vibrante */
+  text-shadow: 0 0 10px #32CD32, 0 0 20px #228B22;
+}
+
+/* Número negativo - vermelho vibrante e brilho forte */
+.dice-success-count .dice-success-number.dice-success-negative {
+  color: #FF6347; /* vermelho tomate vibrante */
+  text-shadow: 0 0 10px #FF4500, 0 0 20px #B22222;
+}
+
+/* Bloco positivo - fundo verde escuro com degradê, brilho mais suave */
+.dice-success-count.dice-success-positive {
+  background: linear-gradient(135deg, #145c2b 0%, #1e7e34 100%);
+  box-shadow: 0 0 20px #2ecc71;
+  color: #27ae60; /* verde escuro */
+  text-shadow: 0 0 12px #27ae60;
+}
+
+/* Bloco negativo - fundo vermelho escuro com degradê, brilho mais suave */
+.dice-success-count.dice-success-negative {
+  background: linear-gradient(135deg, #5c1414 0%, #7a1e1e 100%);
+  box-shadow: 0 0 20px #e74c3c;
+  color: #c0392b; /* vermelho escuro */
+  text-shadow: 0 0 12px #c0392b;
+}
+
+/* Espaçamento vertical entre as margens */
+.success-margin-box label:not(:first-of-type) {
+  margin-top: 0.7rem;
+}
+
+/* Adaptação mobile opcional */
+@media screen and (max-width: 600px) {
+  .success-margin-box {
+    width: 100%;
+    margin: 1rem 0 0 0;
+    align-items: center;
+  }
+}
