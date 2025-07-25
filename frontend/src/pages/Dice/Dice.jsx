@@ -4,17 +4,23 @@ import React, { useState } from "react";
 
 export default function Dice() {
   const [command, setCommand] = useState("");  
-  const [successMargin, setSuccessMargin] = useState(6); // default
-  const [successCriticalMargin, setSuccessCriticalMargin] = useState(10); // default crítico
-  const [failureCriticalMargin, setFailureCriticalMargin] = useState(1); // default falha crítica
+  const [successMargin, setSuccessMargin] = useState(6); // default success margin
+  const [successCriticalMargin, setSuccessCriticalMargin] = useState(10); // default critical success margin
+  const [failureCriticalMargin, setFailureCriticalMargin] = useState(1); // default critical failure margin
   const [results, setResults] = useState([]);
   const [totalSuccess, setTotalSuccess] = useState(0);
   const [error, setError] = useState("");
+
+  // New states for status and failure message
+  const [status, setStatus] = useState("");
+  const [failureType, setFailureType] = useState("");
 
   const handleRoll = async () => {
     setError("");
     setResults([]);
     setTotalSuccess(0);
+    setStatus("");
+    setFailureType("");
 
     try {
       const response = await fetch(
@@ -30,27 +36,31 @@ export default function Dice() {
 
       if (!response.ok) {
         const err = await response.json();
-        setError(err.error || "Erro na resposta");
+        setError(err.error || "Error in response");
         return;
       }
 
       const data = await response.json();
       setResults(data.rolls || []);
       setTotalSuccess(data.grand_total_successes || 0);
+
+      // Update status and failure message from backend
+      setStatus(data.status || "");
+      setFailureType(data.failure_type || "");
     } catch (err) {
-      setError("Erro ao conectar no servidor");
+      setError("Error connecting to server");
     }
   };
 
   return (
     <div className="dice-page">
       <Menu>
-        <button onClick={() => (window.location.href = "/")}>Início</button>
-        <button onClick={() => (window.location.href = "/system")}>Sistema</button>
-        <button onClick={() => (window.location.href = "/equipment")}>Equipamento</button>
-        <button onClick={() => (window.location.href = "/character")}>Personagem</button>
-        <button onClick={() => (window.location.href = "/dice")}>Dados</button>
-        <button onClick={() => (window.location.href = "/map")}>Mapa</button>
+        <button onClick={() => (window.location.href = "/")}>Home</button>
+        <button onClick={() => (window.location.href = "/system")}>System</button>
+        <button onClick={() => (window.location.href = "/equipment")}>Equipment</button>
+        <button onClick={() => (window.location.href = "/character")}>Character</button>
+        <button onClick={() => (window.location.href = "/dice")}>Dice</button>
+        <button onClick={() => (window.location.href = "/map")}>Map</button>
       </Menu>
 
       <div style={{ padding: "20px" }}>
@@ -62,46 +72,53 @@ export default function Dice() {
             placeholder="!roll XdY [+ PdQ + ...]"
           />
 
-          <button onClick={handleRoll}>Rolar</button>
+          <button onClick={handleRoll}>Roll</button>
 
           <div className="success-margin-box">
-            <label htmlFor="success-margin">Margem de Sucesso</label>
+            <label htmlFor="success-margin">Success Margin</label>
             <input
               id="success-margin"
               type="number"
               min={1}
               value={successMargin}
               onChange={(e) => setSuccessMargin(Number(e.target.value))}
-              title="Margem de Sucesso"
+              title="Success Margin"
             />
 
-            <label htmlFor="success-critical-margin">Margem de Sucesso Crítico</label>
+            <label htmlFor="success-critical-margin">Critical Success Margin</label>
             <input
               id="success-critical-margin"
               type="number"
               min={1}
               value={successCriticalMargin}
               onChange={(e) => setSuccessCriticalMargin(Number(e.target.value))}
-              title="Margem de Sucesso Crítico"
+              title="Critical Success Margin"
             />
 
-            <label htmlFor="failure-critical-margin">Margem de Falha Crítica</label>
+            <label htmlFor="failure-critical-margin">Critical Failure Margin</label>
             <input
               id="failure-critical-margin"
               type="number"
               min={1}
               value={failureCriticalMargin}
               onChange={(e) => setFailureCriticalMargin(Number(e.target.value))}
-              title="Margem de Falha Crítica"
+              title="Critical Failure Margin"
             />
           </div>
         </div>
 
         {error && <p className="dice-error">{error}</p>}
 
+        {/* Show critical failure message if status is failure */}
+        {status === "failure" && failureType && (
+          <p className="dice-error" style={{ fontWeight: "bold", marginTop: "1rem" }}>
+            ⚠️ {failureType}
+          </p>
+        )}
+
         {results.length > 0 && (
           <div className="dice-results">
-            <h3 className="dice-header">Resultados</h3>
+            <h3 className="dice-header">Results</h3>
             <ul>
               {results.map((group, idx) => (
                 <li key={idx}>
@@ -111,7 +128,7 @@ export default function Dice() {
                         Roll {rIdx + 1} → [{rollArray.join(", ")}]{rIdx < group.roll_details.length - 1 ? ", " : ""}
                       </span>
                     ))}
-                    ) → Sucessos: {group.total_successes}
+                    ) → Successes: {group.total_successes}
                 </li>
               ))}
             </ul>
@@ -124,7 +141,7 @@ export default function Dice() {
                   : ""
               }`}
             >
-              🎯 <strong>Total Sucessos:</strong>{" "}
+              🎯 <strong>Total Successes:</strong>{" "}
               <span
                 className={`dice-success-number ${
                   totalSuccess > 0
