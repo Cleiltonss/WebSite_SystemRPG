@@ -18,7 +18,7 @@ export default function Dice() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/roll?success_margin=${successMargin}&success_critical=${successCriticalMargin}&failure_critical=${failureCriticalMargin}`,
+        `http://localhost:8080/roll?success_critical_margin=${successCriticalMargin}&failure_critical_margin=${failureCriticalMargin}&success_normal_margin=${successMargin}`,
         {
           method: "POST",
           headers: {
@@ -106,9 +106,9 @@ export default function Dice() {
               {results.map((group, idx) => (
                 <li key={idx}>
                   <strong>{group.group}</strong>: (
-                    {group.roll_details.map((roll, rIdx) => (
+                    {group.roll_details.map((rollArray, rIdx) => (
                       <span key={rIdx}>
-                        Reroll {roll.reroll} → [{roll.dice.join(", ")}]
+                        Roll {rIdx + 1} → [{rollArray.join(", ")}]{rIdx < group.roll_details.length - 1 ? ", " : ""}
                       </span>
                     ))}
                     ) → Sucessos: {group.total_successes}
