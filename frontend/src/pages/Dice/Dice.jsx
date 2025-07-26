@@ -10,6 +10,7 @@ export default function Dice() {
   const [results, setResults] = useState([]);
   const [totalSuccess, setTotalSuccess] = useState(0);
   const [error, setError] = useState("");
+  const backendDicesURL = process.env.REACT_APP_BACKEND_DICES_URL || 'https://website-systemrpg.onrender.com';
 
   // New states for status and failure message
   const [status, setStatus] = useState("");
@@ -23,7 +24,6 @@ export default function Dice() {
     setFailureType("");
 
     try {
-      const backendDicesURL = process.env.REACT_APP_BACKEND_DICES_URL || 'http://localhost:8080';
       const response = await fetch(
         `${backendDicesURL}/roll?success_critical_margin=${successCriticalMargin}&failure_critical_margin=${failureCriticalMargin}&success_normal_margin=${successMargin}`,
         {

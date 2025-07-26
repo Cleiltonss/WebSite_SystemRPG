@@ -30,6 +30,14 @@ int rollDice(T sides) {
 int main() {
     httplib::Server svr;
 
+    svr.Options("/roll", [](const httplib::Request &req, httplib::Response &res) {
+        res.set_header("Access-Control-Allow-Origin", "*");
+        res.set_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+        res.set_header("Access-Control-Allow-Headers", "Content-Type");
+        res.status = 204;
+        return;
+    });
+
     svr.Post("/roll", [](const httplib::Request& req, httplib::Response& res) {
         std::string command = req.body;
 
