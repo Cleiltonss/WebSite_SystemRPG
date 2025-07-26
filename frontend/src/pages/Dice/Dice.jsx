@@ -23,8 +23,9 @@ export default function Dice() {
     setFailureType("");
 
     try {
+      const backendDicesURL = process.env.REACT_APP_BACKEND_DICES_URL;
       const response = await fetch(
-        `http://localhost:8080/roll?success_critical_margin=${successCriticalMargin}&failure_critical_margin=${failureCriticalMargin}&success_normal_margin=${successMargin}`,
+        `${backendDicesURL}/roll?success_critical_margin=${successCriticalMargin}&failure_critical_margin=${failureCriticalMargin}&success_normal_margin=${successMargin}`,
         {
           method: "POST",
           headers: {
