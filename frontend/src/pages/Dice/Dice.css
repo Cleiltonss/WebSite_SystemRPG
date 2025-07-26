@@ -9,7 +9,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #333333;  /* fundo cinza escuro */
+  background-color: #4a4b51;  /* fundo cinza escuro */
   color: #fff;
   font-family: Arial, sans-serif;
   height: 100vh; /* garante altura total */
@@ -19,7 +19,7 @@
 
 .dice-page {
   min-height: 100vh;
-  background-color: #333333; /* fundo escuro, ajuste conforme o que pediu */
+  background-color: #4a4b51; /* fundo escuro, ajuste conforme o que pediu */
   margin: 0;
   padding: 0;
   box-sizing: border-box;

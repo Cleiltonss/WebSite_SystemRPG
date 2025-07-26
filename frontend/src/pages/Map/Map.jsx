@@ -1,4 +1,3 @@
-// imports
 import './Map.css';
 import Menu from '../../components/Menu/Menu';
 import React, { useState, useRef, useEffect } from 'react';
@@ -10,16 +9,20 @@ export default function Map() {
   const [tokens, setTokens] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const [draggingIndex, setDraggingIndex] = useState(null);
-  const [combatStarted, setCombatStarted] = useState(false);
   const [initiativeOrder, setInitiativeOrder] = useState([]);
-  const [currentTurnIndex, setCurrentTurnIndex] = useState(0);
-  const [turnCounter, setTurnCounter] = useState(1);
-  const canvasRef = useRef(null);
-  const previousTokensLength = useRef(tokens.length);
-  const tokenRadius = 20;
-  
+  const [combatStarted, setCombatStarted] = useState(false);
+  const previousTokensLength = useRef(0);
 
-  // Upload do mapa
+  // Cache das imagens dos tokens
+  const [tokenImagesCache, setTokenImagesCache] = useState({});
+
+  // Novo ref para guardar histórico das células visitadas por cada token durante drag
+  const visitedCellsRef = useRef({}); // { tokenIndex: [{x: cellX, y: cellY}, ...], ... }
+
+  const canvasRef = useRef(null);
+  const tokenRadius = 20;
+
+  // Upload handlers
   const handleMapUpload = e => {
     const file = e.target.files[0];
     if (!file) return;
@@ -28,7 +31,6 @@ export default function Map() {
     reader.readAsDataURL(file);
   };
 
-  // Upload do token
   const handleTokenImageUpload = e => {
     const file = e.target.files[0];
     if (!file) return;
@@ -37,51 +39,28 @@ export default function Map() {
     reader.readAsDataURL(file);
   };
 
-  // Resetar tudo
-  const handleResetTokens = () => {
-    setTokens([]);
-    setInitiativeOrder([]);
-    setCombatStarted(false);
-    setCurrentTurnIndex(0);
-    setTurnCounter(1);
-  };
-
-  const resetCombat = () => {
-    setTokens([]);
-    setMapImage(null);
-    setInitiativeOrder([]);
-    setCombatStarted(false);
-    setCurrentTurnIndex(0);
-    setTurnCounter(1);
-  };
-
-
-  // Calcular tamanho do canvas baseado na imagem
   const calculateCanvasSize = image => {
-    let width = image.width * 2;  // aumenta a largura em 50%
-    let height = image.height;      // mantém  a altura original
+    let width = image.width * 2;
+    let height = image.height;
 
-    // Opcional: limita o tamanho para não ultrapassar a tela
     const maxWidth = window.innerWidth * 0.95;
     const maxHeight = window.innerHeight * 0.7;
 
     if (width > maxWidth) {
       const ratio = maxWidth / width;
       width = maxWidth;
-      height = height * ratio;
+      height *= ratio;
     }
 
     if (height > maxHeight) {
       const ratio = maxHeight / height;
       height = maxHeight;
-      width = width * ratio;
+      width *= ratio;
     }
 
     return { width, height };
   };
 
-
-  // Redimensionar canvas ao carregar imagem
   useEffect(() => {
     if (!mapImage) return;
     const image = new Image();
@@ -89,23 +68,52 @@ export default function Map() {
     image.onload = () => setCanvasSize(calculateCanvasSize(image));
   }, [mapImage]);
 
-  
-  // Redesenhar canvas
+  useEffect(() => {
+    const handleResize = () => {
+      if (!mapImage) return;
+      const image = new Image();
+      image.src = mapImage;
+      image.onload = () => setCanvasSize(calculateCanvasSize(image));
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [mapImage]);
+
+  // Carregar imagens dos tokens no cache
+  useEffect(() => {
+    if (tokens.length === 0) {
+      setTokenImagesCache({});
+      return;
+    }
+    tokens.forEach(token => {
+      if (!tokenImagesCache[token.imageSrc]) {
+        const img = new Image();
+        img.src = token.imageSrc;
+        img.onload = () => {
+          setTokenImagesCache(prev => ({ ...prev, [token.imageSrc]: img }));
+        };
+      }
+    });
+  }, [tokens]);
+
+  // Desenhar no canvas
   useEffect(() => {
     if (!mapImage || canvasSize.width === 0) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
+
     const image = new Image();
     image.src = mapImage;
 
-    image.onload = async () => {
+    image.onload = () => {
       canvas.width = canvasSize.width;
       canvas.height = canvasSize.height;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
+      // Grid
       const gridSize = 50 * (canvas.width / image.width);
       ctx.strokeStyle = 'rgba(0, 0, 0, 0.6)';
 
@@ -123,51 +131,29 @@ export default function Map() {
         ctx.stroke();
       }
 
-      // Função que carrega uma imagem e retorna Promise com a imagem pronta
-      const loadImage = (src) =>
-        new Promise((resolve) => {
-          const img = new Image();
-          img.src = src;
-          img.onload = () => resolve(img);
-        });
-
-      // Carrega todas as imagens dos tokens
-      const loadedTokenImages = await Promise.all(
-        tokens.map(token => loadImage(token.imageSrc))
-      );
-
-      loadedTokenImages.forEach((tokenImg, idx) => {
-        const token = tokens[idx];
-        const size = gridSize;
-
-        // Desenha círculo se for o token da vez
-        if (combatStarted && idx === initiativeOrder[currentTurnIndex]) {
-          ctx.beginPath();
-          ctx.arc(token.x, token.y, size / 2 + 6, 0, 2 * Math.PI);
-          ctx.strokeStyle = 'yellow';
-          ctx.lineWidth = 3;
-          ctx.stroke();
+      // >>> Desenhar trajetória dos tokens em movimento
+      if (isDragging && draggingIndex !== null) {
+        const visitedCells = visitedCellsRef.current[draggingIndex];
+        if (visitedCells && visitedCells.length > 0) {
+          ctx.fillStyle = 'rgba(216, 226, 23, 0.3)';
+          visitedCells.forEach(cell => {
+            ctx.fillRect(cell.x * gridSize, cell.y * gridSize, gridSize, gridSize);
+          });
         }
+      }
 
-        // Desenha o token
-        ctx.drawImage(tokenImg, token.x - size / 2, token.y - size / 2, size, size);
+      // Desenha tokens
+      tokens.forEach(token => {
+        const tokenImg = tokenImagesCache[token.imageSrc];
+        if (tokenImg) {
+          const size = gridSize;
+          ctx.drawImage(tokenImg, token.x - size / 2, token.y - size / 2, size, size);
+        }
       });
     };
-  }, [canvasSize, mapImage, tokens, combatStarted, initiativeOrder, currentTurnIndex]);
+  }, [canvasSize, mapImage, tokens, tokenImagesCache]);
 
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (!mapImage) return;
-      const image = new Image();
-      image.src = mapImage;
-      image.onload = () => setCanvasSize(calculateCanvasSize(image));
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [mapImage]);
-
-  // Clique para adicionar token
+  // Adicionar token ao clicar no canvas (só se combate não iniciado)
   const handleCanvasClick = e => {
     if (isDragging || !selectedTokenImage || combatStarted) return;
     const canvas = canvasRef.current;
@@ -186,49 +172,21 @@ export default function Map() {
     };
   };
 
-  // Iniciar combate
   const iniciarCombate = () => {
-    // Se a ordem estiver incompleta, usa ordem padrão
-    let finalOrder = initiativeOrder.length === tokens.length
-      ? initiativeOrder
-      : tokens.map((_, index) => index);
-      
-    setInitiativeOrder(finalOrder);
+    if (tokens.length === 0) return;
+    if (initiativeOrder.length !== tokens.length) {
+      const order = tokens.map((_, idx) => idx);
+      setInitiativeOrder(order);
+    }
     setCombatStarted(true);
-    setCurrentTurnIndex(0);
-    setTurnCounter(1);
   };
 
-
-  // Avançar turno
-  const nextTurn = () => {
-    if (!combatStarted || initiativeOrder.length === 0) return;
-    
-
-    const isLastToken = currentTurnIndex === initiativeOrder.length - 1; 
-    setCurrentTurnIndex((currentTurnIndex + 1) % initiativeOrder.length);
-    
-    // Verifica se ele completou
-    if (isLastToken) {
-      setTurnCounter(prev => prev + 1);
-    }
-  };
-
-
-  // Voltar jogada
-  const previousMove = () => {
-    if (!combatStarted || initiativeOrder.length === 0) return;
-
-    const isFirstToken = currentTurnIndex === 0;
-
-    if (isFirstToken && turnCounter === 1) {return;} // Evita voltar além do início
-
-    const newIndex = (currentTurnIndex - 1 + initiativeOrder.length) % initiativeOrder.length;
-    setCurrentTurnIndex(newIndex); // Atualiza
-    
-    if (isFirstToken && turnCounter > 1) {
-      setTurnCounter(prev => prev - 1);
-    }
+  const resetCombat = () => {
+    setTokens([]);
+    setInitiativeOrder([]);
+    setCombatStarted(false);
+    previousTokensLength.current = 0;
+    setTokenImagesCache({});
   };
 
   useEffect(() => {
@@ -238,18 +196,13 @@ export default function Map() {
       return;
     }
 
-    // Se mudou o número de tokens, resetar a ordem
     if (tokens.length !== previousTokensLength.current) {
       setInitiativeOrder(tokens.map((_, idx) => idx));
       previousTokensLength.current = tokens.length;
     }
-    // Se o tamanho não mudou, mantém a ordem (não faz nada)
   }, [tokens]);
 
-
-
-
-  // Controle de movimento
+  // Drag & Drop dos tokens
   const handleMouseDown = e => {
     const rect = canvasRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
@@ -257,7 +210,7 @@ export default function Map() {
     const index = tokens.findIndex(token =>
       Math.hypot(token.x - mouseX, token.y - mouseY) <= tokenRadius
     );
-    if (index !== -1 && (!combatStarted || index === initiativeOrder[currentTurnIndex])) {
+    if (index !== -1) {
       setDraggingIndex(index);
       setIsDragging(true);
     }
@@ -273,23 +226,36 @@ export default function Map() {
       updated[draggingIndex] = { ...updated[draggingIndex], x: mouseX, y: mouseY };
       return updated;
     });
+
+    // >>> Atualiza histórico de células visitadas para o token sendo arrastado
+    const canvas = canvasRef.current;
+    const image = new Image();
+    image.src = mapImage;
+    image.onload = () => {
+      const gridSize = 50 * (canvas.width / image.width);
+      const cellX = Math.floor(mouseX / gridSize);
+      const cellY = Math.floor(mouseY / gridSize);
+
+      if (!visitedCellsRef.current[draggingIndex]) {
+        visitedCellsRef.current[draggingIndex] = [];
+      }
+      const visitedCells = visitedCellsRef.current[draggingIndex];
+
+      // Só adiciona se for uma célula diferente da última
+      const lastCell = visitedCells.length > 0 ? visitedCells[visitedCells.length - 1] : null;
+      if (!lastCell || lastCell.x !== cellX || lastCell.y !== cellY) {
+        visitedCells.push({ x: cellX, y: cellY });
+        // Limita histórico a 30 células
+        if (visitedCells.length > 30) visitedCells.shift();
+      }
+    };
   };
 
   const handleMouseUp = () => {
     setDraggingIndex(null);
     setIsDragging(false);
-  };
-
-  
-  // Reordenar iniciativa
-  const moveInitiative = (index, direction) => {
-    setInitiativeOrder(prev => {
-      const updated = [...prev];
-      const newIndex = index + direction;
-      if (newIndex < 0 || newIndex >= updated.length) return prev;
-      [updated[index], updated[newIndex]] = [updated[newIndex], updated[index]];
-      return updated;
-    });
+    // Limpa histórico após soltar o token
+    visitedCellsRef.current = {};
   };
 
   return (
@@ -319,14 +285,9 @@ export default function Map() {
           )}
 
           {combatStarted && (
-            <>
-              <button className="control-button" onClick={nextTurn}>Próximo</button>
-              <button className="control-button" onClick={previousMove}>Voltar</button>
-              <button className="control-button" onClick={resetCombat}>Voltar Tudo</button>
-            </>
+            <button className="control-button" onClick={resetCombat}>Voltar Tudo</button>
           )}
         </div>
-
 
         <div className="map-canvas">
           {mapImage && (
@@ -336,82 +297,39 @@ export default function Map() {
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
-              style={{ border: '1px solid #000' }}
+              style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+              width={canvasSize.width}
+              height={canvasSize.height}
             />
           )}
         </div>
 
-        {!combatStarted && tokens.length > 0 && (
-        <div className="initiative-setup">
-          <h4 style={{ color: 'white', marginBottom: '16px' }}>Definir Ordem de Iniciativa</h4>
-          
-          {tokens.map((token, idx) => (
-            <div key={idx} className="token-name-container">
-              <img
-                src={token.imageSrc}
-                alt={`token ${idx}`}
-                className="token-preview"
-              />
-              
-              <input
-                className="token-name-input"
-                type="text"
-                value={token.name}
-                onChange={(e) => {
-                  const newName = e.target.value;
-                  setTokens(prev => {
-                    const updated = [...prev];
-                    updated[idx] = { ...updated[idx], name: newName };
-                    return updated;
-                  });
-                }}
-                placeholder={`Token ${idx + 1}`}
-              />
-
-              <select
-                className="initiative-select"
-                value={initiativeOrder.indexOf(idx) + 1 || ''}
-                onChange={(e) => {
-                  const pos = parseInt(e.target.value) - 1;
-                  if (isNaN(pos)) return;
-                  setInitiativeOrder(prev => {
-                    const newOrder = [...prev];
-                    const currentIdx = newOrder.indexOf(idx);
-                    if (currentIdx !== -1) newOrder.splice(currentIdx, 1);
-                    newOrder.splice(pos, 0, idx);
-                    return newOrder;
-                  });
-                }}
-              >
-                <option value="">--</option>
-                {tokens.map((_, i) => (
-                  <option key={i} value={i + 1}>{i + 1}º</option>
-                ))}
-              </select>
-            </div>
-          ))}
-        </div>
-        )}
-
-
-
-        {combatStarted && (
-          <div className="initiative-panel">
-            <h4>Iniciativa</h4>
-            {initiativeOrder.map((tokenIndex, idx) => (
-              <div key={idx} className="initiative-token">
-                <img src={tokens[tokenIndex].imageSrc} alt={`token ${idx}`} />
-                <span>{tokens[tokenIndex].name}</span>
-                {idx === currentTurnIndex && <strong> ← Ativo</strong>}
-                <button onClick={() => moveInitiative(idx, -1)}>↑</button>
-                <button onClick={() => moveInitiative(idx, 1)}>↓</button>
-              </div>
+        <div className="token-container">
+          <h3 className="token-header">Personagens</h3>
+          <ul>
+            {initiativeOrder.map((idx, i) => (
+              <li key={i}>
+                {tokens[idx] ? (
+                  <input
+                    type="text"
+                    value={tokens[idx].name}
+                    onChange={(e) => {
+                      const newName = e.target.value;
+                      setTokens(prevTokens => {
+                        const updatedTokens = [...prevTokens];
+                        updatedTokens[idx] = { ...updatedTokens[idx], name: newName };
+                        return updatedTokens;
+                      });
+                    }}
+                    className="token-name-input"
+                  />
+                ) : (
+                  'Token removido'
+                )}
+              </li>
             ))}
-
-            {/* Contador de turno posicionado abaixo da lista de iniciativa */}
-            <p className="turn-counter">Turno: {turnCounter}</p>
-          </div>
-        )}
+          </ul>
+        </div>
 
       </div>
     </div>

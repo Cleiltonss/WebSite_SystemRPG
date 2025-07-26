@@ -55,12 +55,12 @@ export default function Dice() {
   return (
     <div className="dice-page">
       <Menu>
-        <button onClick={() => (window.location.href = "/")}>Home</button>
-        <button onClick={() => (window.location.href = "/system")}>System</button>
-        <button onClick={() => (window.location.href = "/equipment")}>Equipment</button>
-        <button onClick={() => (window.location.href = "/character")}>Character</button>
-        <button onClick={() => (window.location.href = "/dice")}>Dice</button>
-        <button onClick={() => (window.location.href = "/map")}>Map</button>
+        <button onClick={() => (window.location.href = "/")}>Inicio</button>
+        <button onClick={() => (window.location.href = "/system")}>Sistema</button>
+        <button onClick={() => (window.location.href = "/equipment")}>Equipamento</button>
+        <button onClick={() => (window.location.href = "/character")}>Personagem</button>
+        <button onClick={() => (window.location.href = "/dice")}>Dados</button>
+        <button onClick={() => (window.location.href = "/map")}>Mapa</button>
       </Menu>
 
       <div style={{ padding: "20px" }}>
@@ -75,7 +75,7 @@ export default function Dice() {
           <button onClick={handleRoll}>Roll</button>
 
           <div className="success-margin-box">
-            <label htmlFor="success-margin">Success Margin</label>
+            <label htmlFor="success-margin">Margem Sucesso</label>
             <input
               id="success-margin"
               type="number"
@@ -85,7 +85,7 @@ export default function Dice() {
               title="Success Margin"
             />
 
-            <label htmlFor="success-critical-margin">Critical Success Margin</label>
+            <label htmlFor="success-critical-margin">Margem Sucesso Critico</label>
             <input
               id="success-critical-margin"
               type="number"
@@ -95,7 +95,7 @@ export default function Dice() {
               title="Critical Success Margin"
             />
 
-            <label htmlFor="failure-critical-margin">Critical Failure Margin</label>
+            <label htmlFor="failure-critical-margin">Margem Falha Critica</label>
             <input
               id="failure-critical-margin"
               type="number"
