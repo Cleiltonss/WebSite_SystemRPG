@@ -1,9 +1,5 @@
 #include <iostream>
 #include <random>
-#include <winsock2.h>
-#include <Windows.h>
-#include <bcrypt.h>
-#pragma comment(lib, "bcrypt.lib")
 #include <httplib.h>
 #include <string>
 #include <sstream>
@@ -12,16 +8,11 @@
 
 using namespace std;
 
+// Gera uma seed segura multiplataforma usando std::random_device
 unsigned int getSecureSeed() {
-    unsigned int seed;
-    NTSTATUS status = BCryptGenRandom(
-        NULL,
-        reinterpret_cast<PUCHAR>(&seed),
-        sizeof(seed),
-        BCRYPT_USE_SYSTEM_PREFERRED_RNG
-    );
-    if (!BCRYPT_SUCCESS(status)) throw runtime_error("Error generating secure seed");
-    return seed;
+    std::random_device rd;
+    // random_device pode gerar uint32_t, para garantir o tipo unsigned int
+    return static_cast<unsigned int>(rd());
 }
 
 std::mt19937 initGenerator() {
@@ -111,14 +102,12 @@ int main() {
                 int count_eC = 0;
                 int count_sN = 0;
 
-
                 for (int val : rollResults) {
                     if (val >= sC) count_sC++;
                     else if (val <= eC) count_eC++;
                     else if (val >= sN && val > eC && val < sC) count_sN++;
                 }
 
-                // Cancel sC with eC
                 int cancel = min(count_sC, count_eC);
                 count_sC -= cancel;
                 count_eC -= cancel;
