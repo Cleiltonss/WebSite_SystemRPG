@@ -169,8 +169,8 @@ int main() {
         res.status = 200;
     });
 
-    std::cout << "[Server ACTIVE] Access POST http://localhost:8080/roll\n";
-    svr.listen("localhost", 8080);
+    std::cout << "[Server ACTIVE] Access POST http://0.0.0.0:8080/roll\n";
+    svr.listen("0.0.0.0", 8080);    
 
     return 0;
 }
