@@ -32,11 +32,14 @@ To overcome these limitations, the project was **rewritten from scratch** based 
 
 ### ✅ Implemented Pages
 - **Home page** — Introductory landing page.
+- <img width="1602" height="432" alt="home" src="https://github.com/user-attachments/assets/e8ef29cb-5758-4bc5-a2d6-22efe5cdc5df" />
 - **Dice page (`/dice`)**:
+- <img width="1602" height="537" alt="dice" src="https://github.com/user-attachments/assets/2ec5f455-c01f-45d9-bb7d-cb8c3fb8c7b7" />
   - Realistic dice roll animations.
   - Roll history visible in the UI.
   - Backend C++ communication via `POST` requests.
 - **Map page (`/map`)**:
+- <img width="1861" height="885" alt="map" src="https://github.com/user-attachments/assets/2615bcba-c7be-47be-9d76-49d8d7fb6556" />
   - Upload custom battle maps.
   - Grid overlay for tactical movement.
   - Interactive tokens with turn control.
