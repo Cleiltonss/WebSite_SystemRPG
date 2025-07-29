@@ -1,80 +1,90 @@
 # 🧙‍♂️ Sistema NEMO – Tactical Interactive RPG Platform
 
-**Sistema NEMO** is a tactical RPG platform built with **React**, designed for game masters and players who want an immersive, intuitive, and responsive turn-based combat experience.
+**Sistema NEMO** is a tactical RPG platform focused on interactive, intuitive, and responsive turn-based combat. Designed for game masters and players seeking an immersive digital experience, the system allows full control over maps, tokens, combat turns, and realistic dice rolls with smooth animations.
 
-> This project combines modern web technologies with custom logic for initiative tracking, movement, and dice rolls—creating a solid foundation for online or in-person RPG sessions.
-
----
-
-## 🚀 Current Features
-
-### 🎲 Interactive Dice Rolls
-- Realistic dice animation and sound.
-- Roll history displayed in the interface.
-- Easily extensible for different dice types.
-
-### 🗺️ Tactical Map with Grid
-- Upload your own image to use as a battle map.
-- Overlaid grid for tactical movement (1m² per cell).
-- Add, position, and move tokens on the map.
-
-### ⚔️ Turn-Based Combat System
-- Sorted initiative list shown beside the map.
-- Tokens follow the pre-set initiative order.
-- Only the current token in turn can be moved.
-- Interface to edit initiative order before combat starts.
-- Turn counter is displayed.
-
-### 🧩 Modular and Responsive Interface
-- Sidebar control panel (initiative list, combat controls).
-- Centered map with zoom support.
-- UI built with [shadcn/ui](https://ui.shadcn.com) and styled with Tailwind CSS.
+> This project combines modern web technologies with custom game logic, leveraging the performance of **C++** and the flexibility of **React**, creating a solid foundation for both online and in-person RPG sessions.
 
 ---
 
-## ⚙️ Technologies Used
+## 🔄 From Static Prototype to Modular Platform
 
-| Technology           | Description                                       |
-|----------------------|---------------------------------------------------|
-| **React + Vite**     | Modern frontend framework for interactive apps    |
-| **Tailwind CSS**     | Utility-first responsive styling                  |
-| **Shadcn UI**        | Accessible, themeable UI components               |
-| **Lucide Icons**     | Clean and lightweight icon set                    |
-| **Framer Motion**    | Smooth animation and motion effects               |
-| **C++ via WebAssembly** | Core game logic (e.g., dice, validation, AI) with high performance |
+Sistema NEMO started as a simple prototype built with **HTML, CSS, vanilla JavaScript, and Python**, initially focused on dice rolling and map visualization. As the project grew in scope — especially regarding scalability, performance, and modularity — it became clear that a more robust architecture was needed.
 
----
+### 💡 Early Challenges
+- Difficulty scaling features on a static frontend.
+- Game logic limited to plain JavaScript.
+- Inconsistent simulations versus real-world dice behavior.
+- Fragile and low-performance integration between frontend and Python backend.
 
-## 🔄 Project Evolution
+### 🚀 New Architecture
+To overcome these limitations, the project was **rewritten from scratch** based on the following stack:
 
-**Sistema NEMO** started as a basic web interface built with **HTML, CSS, and vanilla JavaScript**, focused on simple RPG mechanics like dice rolling and static map display. As the scope and ambition of the project grew, a migration to a more modern and scalable architecture became necessary.
-
-### 🚀 From Static HTML to React SPA
-
-The original static site evolved into a full **Single Page Application (SPA)** using **React + Vite**, bringing:
-
-- Better UI component modularity  
-- Easier scalability and interactivity  
-- Clean state and effect management  
-
-### 🧠 From JS Randomness to C++ Game Logic
-
-The basic `Math.random()`-based logic in JavaScript is now being replaced by **C++ code compiled to WebAssembly**, enabling:
-
-- Higher performance and precise control over randomness  
-- Realistic simulations, physics-based rolls, and rule validation  
-- A hands-on learning experience with C++ in a real-world project  
-
-This transformation turned the platform into more than just a visual tool—it's now a **real-time logic sandbox**, where **C++ and React work together** to drive an intelligent, modular RPG system.
+| Layer              | Technology                                       |
+|--------------------|-------------------------------------------------|
+| **Frontend SPA**    | React + Vite                                    |
+| **Backend**         | C++ HTTP Server (httplib)                       |
+| **Production Deploy** | Render (frontend and backend)                  |
+| **Local Dev**       | `.env` environment configuration (localhost vs prod) |
 
 ---
 
-## 🎯 Upcoming Features
+## 📌 Current Project Status
 
-- ✅ Editable initiative order UI  
-- 🔄 3D Dice Roll animation using Three.js + WebAssembly  
-- 🧮 Movement validator with obstacle detection on the grid  
-- 🎭 Procedural NPC generator  
-- 🧠 Custom rule engine and character sheet integration  
+### ✅ Implemented Pages
 
+- **Home page** — Introductory landing page.  
+  <img width="1602" height="432" alt="home" src="https://github.com/user-attachments/assets/e8ef29cb-5758-4bc5-a2d6-22efe5cdc5df" />
 
+- **Dice page (`/dice`)**:  
+  <img width="1602" height="537" alt="dice" src="https://github.com/user-attachments/assets/2ec5f455-c01f-45d9-bb7d-cb8c3fb8c7b7" />  
+  - Realistic dice roll animations.  
+  - Roll history visible in the UI.  
+  - Backend C++ communication via `POST` requests.
+
+- **Map page (`/map`)**:  
+  <img width="1861" height="885" alt="map" src="https://github.com/user-attachments/assets/2615bcba-c7be-47be-9d76-49d8d7fb6556" />  
+  - Upload custom battle maps.  
+  - Grid overlay for tactical movement.  
+  - Interactive tokens with turn control.  
+  - Initiative system with customizable order.
+
+All these features are fully integrated between frontend and backend, providing a smooth experience both in local development and production environments.
+
+---
+
+## 🔌 Communication Flow
+
+### 📡 Frontend → Backend
+1. React sends `POST` requests to the C++ server using `fetch()`.
+2. Commands are sent as plain text (e.g., `!roll 3d6+2`).
+3. The backend URL is configurable via `VITE_BACKEND_DICES_URL`, allowing easy switching between production and local environments.
+
+### ⚙️ Backend in C++
+- Uses the `httplib` library to listen for HTTP requests on port 8080.
+- Parses dice roll commands and applies game rules (critical success, failure, etc.).
+- Returns structured JSON responses to the frontend.
+- Architected for future expansion with rule validation, physics-based simulations, and AI logic.
+
+---
+
+## 🧠 Architectural Rationale
+
+Choosing **C++ for the backend** was driven by the need for:
+- Realistic dice roll simulations (replacing JavaScript’s `Math.random()` with deterministic or high-quality PRNG).
+- High-performance game logic processing.
+- Portability for future experiments with WebAssembly (WASM) and native browser integration.
+
+On the other hand, **React with Vite** provides:
+- Modular, reactive UI components.
+- Easy integration with modern animation and UI libraries.
+- Fast development with Hot Module Reload (HMR) and a streamlined environment.
+
+---
+
+## 🔮 Upcoming Features
+
+- 🧮 Movement validation with obstacle detection on the map.
+- 🎲 3D dice roll animations with Three.js + WASM integration.
+- 🎭 Procedural NPC and creature generator.
+- 📜 Custom rule engine with character sheet integration.
+- 🧠 AI-powered NPC control and dynamic encounters.
