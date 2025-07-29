@@ -22,12 +22,25 @@ export default function Map() {
   const canvasRef = useRef(null);
   const tokenRadius = 20;
 
+  // Websocket server communication
+  const ws = useRef(null);
+
+  
+
   // Upload handlers
   const handleMapUpload = e => {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => setMapImage(reader.result);
+    
+    reader.onload = () => {
+      setMapImage(reader.result);
+      ws.current?.send(JSON.stringify({
+        type: "set_map",
+        mapImage: reader.result,
+      }));
+    };
+
     reader.readAsDataURL(file);
   };
 
@@ -153,7 +166,7 @@ export default function Map() {
     };
   }, [canvasSize, mapImage, tokens, tokenImagesCache]);
 
-  // Adicionar token ao clicar no canvas (só se combate não iniciado)
+  // Add token to the map on click
   const handleCanvasClick = e => {
     if (isDragging || !selectedTokenImage || combatStarted) return;
     const canvas = canvasRef.current;
@@ -168,7 +181,12 @@ export default function Map() {
       const cellY = Math.floor(clickY / gridSize);
       const tokenX = cellX * gridSize + gridSize / 2;
       const tokenY = cellY * gridSize + gridSize / 2;
-      setTokens(prev => [...prev, { x: tokenX, y: tokenY, imageSrc: selectedTokenImage, name: `Token ${prev.length + 1}` }]);
+      updateTokensAndBroadcast([...tokens, {
+        x: tokenX,
+        y: tokenY,
+        imageSrc: selectedTokenImage,
+        name: `Token ${tokens.length + 1}`,
+      }]);
     };
   };
 
@@ -187,6 +205,9 @@ export default function Map() {
     setCombatStarted(false);
     previousTokensLength.current = 0;
     setTokenImagesCache({});
+    
+    // Notifica todas as abas via WebSocket
+    ws.current?.send(JSON.stringify({ type: "reset_combat" }));
   };
 
   useEffect(() => {
@@ -221,13 +242,7 @@ export default function Map() {
     const rect = canvasRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
-    setTokens(prev => {
-      const updated = [...prev];
-      updated[draggingIndex] = { ...updated[draggingIndex], x: mouseX, y: mouseY };
-      return updated;
-    });
 
-    // >>> Atualiza histórico de células visitadas para o token sendo arrastado
     const canvas = canvasRef.current;
     const image = new Image();
     image.src = mapImage;
@@ -235,21 +250,33 @@ export default function Map() {
       const gridSize = 50 * (canvas.width / image.width);
       const cellX = Math.floor(mouseX / gridSize);
       const cellY = Math.floor(mouseY / gridSize);
+      const tokenX = cellX * gridSize + gridSize / 2;
+      const tokenY = cellY * gridSize + gridSize / 2;
 
+      // Atualiza a posição do token arrastado
+      const updated = tokens.map((token, idx) => {
+        if (idx === draggingIndex) {
+          return { ...token, x: tokenX, y: tokenY };
+        }
+        return token;
+      });
+
+      updateTokensAndBroadcast(updated);
+
+      // Atualiza histórico de células visitadas para o token sendo arrastado
       if (!visitedCellsRef.current[draggingIndex]) {
         visitedCellsRef.current[draggingIndex] = [];
       }
       const visitedCells = visitedCellsRef.current[draggingIndex];
-
-      // Só adiciona se for uma célula diferente da última
       const lastCell = visitedCells.length > 0 ? visitedCells[visitedCells.length - 1] : null;
+
       if (!lastCell || lastCell.x !== cellX || lastCell.y !== cellY) {
         visitedCells.push({ x: cellX, y: cellY });
-        // Limita histórico a 30 células
-        if (visitedCells.length > 30) visitedCells.shift();
+        if (visitedCells.length > 30) visitedCells.shift(); // limite a 30 células
       }
     };
   };
+
 
   const handleMouseUp = () => {
     setDraggingIndex(null);
@@ -257,6 +284,88 @@ export default function Map() {
     // Limpa histórico após soltar o token
     visitedCellsRef.current = {};
   };
+
+  // Websocket Server
+  useEffect(() => {
+    const isDocker = window.location.hostname !== 'localhost';
+    const wsUrl = isDocker
+      ? 'ws://websocket:8081'
+      : 'ws://localhost:8081';
+
+    ws.current = new WebSocket(wsUrl);
+    window.ws = ws.current;
+
+
+    ws.current.onopen = () => {
+      console.log("✅ WebSocket connected from Map.jsx");
+    };
+
+    const sendWhenOpen = () => {
+      if (ws.current.readyState === WebSocket.OPEN) {
+        ws.current.send(JSON.stringify({ type: "get_state" }));
+      } else {
+        // tenta de novo em 50ms se ainda não estiver aberto
+        setTimeout(sendWhenOpen, 50);
+      }
+    };
+
+    sendWhenOpen();
+
+    ws.current.onmessage = (event) => {
+      if (typeof event.data === 'string') {
+        const msg = JSON.parse(event.data);
+        handleMessage(msg);
+      } else if (event.data instanceof Blob) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const text = reader.result;
+          const msg = JSON.parse(text);
+          handleMessage(msg);
+        };
+        reader.readAsText(event.data);
+      } else {
+        console.warn('Tipo de dado recebido não suportado:', event.data);
+      }
+    };
+
+    function handleMessage(msg) {
+      if (msg.type === "full_state") {
+        setMapImage(msg.mapImage);
+        setTokens(msg.tokens);
+      }
+      if (msg.type === "token_update") {
+        setTokens(msg.tokens);
+      }
+  
+    }
+
+    ws.current.onerror = (error) => {
+      console.error("❌ WebSocket error:", error);
+    };
+
+    ws.current.onclose = (event) => {
+      console.log("🔌 WebSocket connection closed.");
+      console.log('WebSocket fechado:', event);
+    };
+
+    return () => {
+      if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+        ws.current.close();
+      }
+    };
+  }, []);
+
+
+
+  // Auxiliar function to websocket saving position of tokens
+  const updateTokensAndBroadcast = (newTokens) => {
+    setTokens(newTokens);
+    ws.current?.send(JSON.stringify({
+      type: "token_update",
+      tokens: newTokens,
+    }));
+  };
+
 
   return (
     <div className="map-page">
@@ -315,11 +424,13 @@ export default function Map() {
                     value={tokens[idx].name}
                     onChange={(e) => {
                       const newName = e.target.value;
-                      setTokens(prevTokens => {
-                        const updatedTokens = [...prevTokens];
+
+                      // Valida se o índice é válido
+                      if (idx >= 0 && idx < tokens.length) {
+                        const updatedTokens = [...tokens];
                         updatedTokens[idx] = { ...updatedTokens[idx], name: newName };
-                        return updatedTokens;
-                      });
+                        updateTokensAndBroadcast(updatedTokens);
+                      }
                     }}
                     className="token-name-input"
                   />

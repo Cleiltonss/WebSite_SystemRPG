@@ -10,7 +10,8 @@ export default function Dice() {
   const [results, setResults] = useState([]);
   const [totalSuccess, setTotalSuccess] = useState(0);
   const [error, setError] = useState("");
-  const backendDicesURL = process.env.REACT_APP_BACKEND_DICES_URL || 'https://website-systemrpg.onrender.com';
+  const backendDicesURL = import.meta.env.VITE_BACKEND_DICES_URL || 'https://website-systemrpg.onrender.com';
+
 
   // New states for status and failure message
   const [status, setStatus] = useState("");

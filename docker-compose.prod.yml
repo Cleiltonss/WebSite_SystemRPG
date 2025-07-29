@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  backend: # C++ (roll dice)
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+
+  websocket:  # Node.js (backend-sync)
+    build:
+      context: ./backend-sync
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - backend
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"
+    depends_on:
+      - websocket

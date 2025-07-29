@@ -6,6 +6,12 @@
 #include <vector>
 #include <regex>
 
+// For Windows
+#ifdef _WIN32
+#include <winsock2.h>
+#pragma comment(lib, "ws2_32.lib")
+#endif
+
 using namespace std;
 
 // Gera uma seed segura multiplataforma usando std::random_device
@@ -28,6 +34,16 @@ int rollDice(T sides) {
 }
 
 int main() {
+    // For Window
+    #ifdef _WIN32
+        WSADATA wsaData;
+        int wsaResult = WSAStartup(MAKEWORD(2,2), &wsaData);
+        if (wsaResult != 0) {
+            std::cerr << "WSAStartup failed: " << wsaResult << std::endl;
+            return 1;
+        }
+    #endif
+
     httplib::Server svr;
 
     svr.Options("/roll", [](const httplib::Request &req, httplib::Response &res) {
@@ -166,8 +182,15 @@ int main() {
         res.status = 200;
     });
 
+    // Route for DEV and PROD
     std::cout << "[Server ACTIVE] Access POST http://0.0.0.0:8080/roll\n";
     svr.listen("0.0.0.0", 8080);    
+
+    
+    // For Windows
+    #ifdef _WIN32
+        WSACleanup();
+    #endif
 
     return 0;
 }

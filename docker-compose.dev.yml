@@ -1,0 +1,31 @@
+version: "3.8"
+
+services: 
+  backend: #  C++ (roll dice)
+    build:
+      context: ./backend
+      dockerfile: Dockerfile  # Unique Dockerfile to C++
+    ports:
+      - "8080:8080"
+    depends_on:
+      - websocket
+
+  websocket:  # Node.js (backend-sync)
+    build:
+      context: ./backend-sync
+      dockerfile: Dockerfile  # Unique Dockerfile Node.js to websocket
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./backend-sync/data:/app/data
+
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev  # Run dev vite server to hot reload: dev 
+    ports:
+      - "5173:5173"
+    stdin_open: true
+    tty: true

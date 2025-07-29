@@ -1,13 +1,19 @@
-FROM ubuntu:22.04
-
-RUN apt-get update && apt-get install -y g++ make
+# Compile for Linux 
+FROM gcc:latest AS builder
 
 WORKDIR /app
 
 COPY main.cpp .
 COPY httplib.h .
 
-RUN g++ -std=c++17 -o dice_server main.cpp
+RUN g++ -std=c++17 -static-libstdc++ -static-libgcc -o dice_server main.cpp
+
+# Light running image
+FROM debian:bookworm-slim
+
+WORKDIR /app
+
+COPY --from=builder /app/dice_server ./
 
 EXPOSE 8080
 
