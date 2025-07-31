@@ -8,6 +8,7 @@ const SAVE_FILE = path.join(__dirname, "data", "map_state.json");
 let state = {
   mapImage: null,
   tokens: [],
+  combatStarted: false // <-- novo estado
 };
 
 // 🔄 Tenta carregar o estado salvo
@@ -32,13 +33,19 @@ wss.on("connection", (ws) => {
         type: "full_state",
         mapImage: state.mapImage,
         tokens: state.tokens,
+        combatStarted: state.combatStarted, // <-- incluído aqui
       }));
     }
 
     if (msg.type === "set_map") {
       state.mapImage = msg.mapImage;
       saveState(); // 💾 salvar após alteração
-      broadcast({ type: "full_state", mapImage: state.mapImage, tokens: state.tokens });
+      broadcast({ 
+        type: "full_state", 
+        mapImage: state.mapImage, 
+        tokens: state.tokens,
+        combatStarted: state.combatStarted, 
+      });
     }
 
     if (msg.type === "token_update") {
@@ -50,18 +57,28 @@ wss.on("connection", (ws) => {
       });
     }
 
+    if (msg.type === "start_combat") {
+      state.combatStarted = true;
+      saveState();
+      broadcast({
+        type: "combat_status",
+        combatStarted: true,
+      });
+    }
+
     if (msg.type === "reset_combat") {
-      state.tokens = [];               // zera os tokens
-      state.mapImage = null;          // se quiser resetar o mapa também
-      saveState();                    // salva o estado vazio
+      state.tokens = [];
+      state.mapImage = null;
+      state.combatStarted = false; 
+      saveState();
 
       broadcast({
         type: "full_state",
         mapImage: state.mapImage,
         tokens: state.tokens,
+        combatStarted: state.combatStarted,
       });
     }
-
   });
 
   ws.on("close", () => {
