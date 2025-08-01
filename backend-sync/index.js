@@ -20,7 +20,15 @@ try {
   console.log("📂 Nenhum estado salvo encontrado, iniciando vazio.");
 }
 
-const wss = new WebSocket.Server({ port: 8081 });
+
+const server = require("http").createServer();
+const wss = new WebSocket.Server({ server });
+
+const PORT = process.env.PORT || 8081;
+server.listen(PORT, () => {
+  console.log(`🌐 WebSocket rodando em ws://localhost:${PORT}`);
+});
+
 
 wss.on("connection", (ws) => {
   console.log("🧠 Novo cliente conectado");
@@ -106,4 +114,4 @@ function saveState() {
   }
 }
 
-console.log("🌐 WebSocket rodando em ws://localhost:8081");
+// console.log("🌐 WebSocket rodando em ws://localhost:8081");
