@@ -306,14 +306,9 @@ export default function Map() {
 
   // Websocket Server
   useEffect(() => {
-    const isDocker = window.location.hostname !== 'localhost';
-    const wsUrl = isDocker
-      ? 'ws://websocket:8081'
-      
-      // only for localhost
-      // : 'ws://localhost:8081'; 
-      // only for website
-      : 'wss://website-systemrpg-websocket.onrender.com'; 
+    const wsUrl = window.location.hostname === 'localhost'
+      ? 'ws://localhost:8081'
+      : 'wss://website-systemrpg-websocket.onrender.com';
 
 
     ws.current = new WebSocket(wsUrl);
