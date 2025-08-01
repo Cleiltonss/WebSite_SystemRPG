@@ -309,7 +309,12 @@ export default function Map() {
     const isDocker = window.location.hostname !== 'localhost';
     const wsUrl = isDocker
       ? 'ws://websocket:8081'
-      : 'ws://localhost:8081';
+      
+      // only for localhost
+      // : 'ws://localhost:8081'; 
+      // only for website
+      : 'wss://website-systemrpg-websocket.onrender.com'; 
+
 
     ws.current = new WebSocket(wsUrl);
     window.ws = ws.current;
